@@ -4,11 +4,16 @@
   }
   
   .bg-image {
-    background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200');
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
     background-size: cover;
     background-position: center;
   }
   
+  .bg-login-image {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTsVam2yCq25FTmhJSL0i2pIAiXHJ1GesPQw5AUIUzzLsLh9Ekt&usqp=CAU');
+    background-size: cover;
+    background-position: center;
+  }
 
  
   

@@ -9,12 +9,15 @@ import { ShopfloorLoginComponent } from './shopfloor-login/shopfloor-login.compo
 import { EhsmLoginComponent } from './ehsm-login/ehsm-login.component';
 import { QualityLoginComponent } from './quality-login/quality-login.component';
 import { VendorLoginComponent } from './vendor-login/vendor-login.component';
+import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
+
 
 
 const routes: Routes = [
   { path:'' , redirectTo: '\home' , pathMatch:'full'},
   { path:'\home' , component: HomeComponent},
   { path:'\customerlogin' , component: CustomerLoginComponent},
+  { path:'customerlogin/customerdashboard' , component: CustomerDashboardComponent},
   { path:'vendorlogin' , component: VendorLoginComponent},
   { path:'\employeelogin' , component: EmployeeLoginComponent},
   { path:'\maintenancelogin' , component: MaintenanceLoginComponent},

@@ -1,0 +1,25 @@
+<h2 class="ui center aligned icon header">
+    <i class="circular users icon"></i>
+    Customer Dashboard
+</h2>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <p-chart type="bar" [data]="data"></p-chart>
+      </div>
+      <div class="col">
+        <p-chart type="doughnut" [data]="doughnutData"></p-chart>
+      </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <p-chart type="pie" [data]="doughnutData"></p-chart>
+      </div>
+      <div class="col">
+        <p-chart type="line" [data]="data"></p-chart>
+      </div>
+    </div>
+</div>
+
