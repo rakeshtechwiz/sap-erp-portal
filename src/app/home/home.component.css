@@ -4,7 +4,15 @@
  #headnav {
      color: pink;
  }
-
+ #cards-section-div {
+   margin-top: 2rem;
+ }
+ #magic {
+   box-shadow: none;
+ }
+ .card:hover {
+   text-decoration: none;
+ }
 /*!
 * Start Bootstrap - Creative v6.0.1 (https://startbootstrap.com/themes/creative)
 * Copyright 2013-2020 Start Bootstrap
