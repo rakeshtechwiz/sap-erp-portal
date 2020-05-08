@@ -3,19 +3,31 @@
   min-height: 100vh;
 }
 
+.kaar-color {
+  color: white;
+}
 .bg-image {
-  background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+  background-image: url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1414&q=80');
   background-size: cover;
   background-position: center;
 }
-
-
 
 .bg-login-image {
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTsVam2yCq25FTmhJSL0i2pIAiXHJ1GesPQw5AUIUzzLsLh9Ekt&usqp=CAU');
+  background-image: url('https://i.stack.imgur.com/90nGa.jpg');
   background-size: cover;
   background-position: center;
 }
+#logo {
+  margin-left: 20rem;
+  margin-bottom: 5rem;
+}
+#home {
+  margin-bottom: 5rem;
+  margin-left: 39.5rem;
+  color: black;
+}
+
+
 
 
 

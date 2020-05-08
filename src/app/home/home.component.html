@@ -6,14 +6,14 @@
     <meta name="author" content="" />
     <title>SAP Portal</title>
     <!-- Font Awesome icons (free version)-->
-    
+    <script src="src\assets\navbar.js"></script>
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
     <!-- Third party plugin CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
 </head>
-<!--<nav id="headnav"class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+<!-- <nav id="headnav"class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
     <a class="navbar-brand" href="#">
         <img src="https://media.glassdoor.com/sqll/443831/kaar-technologies-squarelogo-1407823308138.png" width="40" height="40" class="d-inline-block align-top img-thumbnail" alt="">
     </a>
@@ -55,8 +55,8 @@
       <h1 class="display-4">Welcome to SAP ERP Portal</h1>
       <p class="lead">One stop shop for all your SAP needs.</p>
     </div>
-</div>
--->
+</div> -->
+
 <body id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
@@ -65,7 +65,7 @@
             <img src="https://media.glassdoor.com/sqll/443831/kaar-technologies-squarelogo-1407823308138.png" width="75" height="75" class="d-inline-block align-top img-thumbnail" alt="">
         </a>
           <!-- <a class="navbar-brand js-scroll-trigger" href="#page-top">SAP ERP Portal</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> -->
-          <div class="collapse navbar-collapse" id="navbarResponsive">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto my-2 my-lg-0">
                   <li class="nav-item"><a routerLink="/customerlogin" class="nav-link js-scroll-trigger">Customer</a></li>
                   <li class="nav-item"><a routerLink="/vendorlogin" class="nav-link js-scroll-trigger" >Vendor</a></li>
@@ -129,7 +129,7 @@
               </a>
               <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
+                <span id="test" class="sr-only">Next</span>
               </a>
             </div>
             <hr class="my-4">
@@ -183,7 +183,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
   <!-- Core theme JS-->
-  <script src="src\assets\scripts.js"></script>
+  <button id="check">Check</button>
 </body>
 </html>
 
