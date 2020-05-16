@@ -21,7 +21,7 @@ import { QualityLoginComponent } from './quality-login/quality-login.component';
 import { VendorLoginComponent } from './vendor-login/vendor-login.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 
-
+import { DataService } from './data.service';
 
 
 @NgModule({
@@ -48,7 +48,7 @@ import { CustomerDashboardComponent } from './customer-dashboard/customer-dashbo
     ButtonModule,
     ChartModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
