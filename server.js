@@ -62,56 +62,7 @@ app.post('/login', (req, res) => {
 	req1.end();
 });
 
-var samOptions = {
-	'method': 'POST',
-	'port': 50000,
-	'host': 'dxktpipo.kaarcloud.com',
-	'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_Sam&receiverParty=&receiverService=&interface=SI_LoginAll_Req&interfaceNamespace=http%3A%2F%2Floginall.com%2Fdemo',
-	'headers': {
-		'Content-Type': 'application/xml',
-		'Authorization': 'Basic UE9VU0VSOkthYXJAUE8yMDIw',
-	},
-	'maxRedirects': 20
-};
 
-app.post('/samlogin', (req, res) => {
-	const vendorID = req.body.vendId;
-	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:demo="http://loginall.com/demo">
-	<soapenv:Header/>
-	<soapenv:Body>
-	<demo:MT_LoginAll_Req>
-	<Designation>1</Designation>
-	<Password>1</Password>
-	<UserId>1</UserId>
-	</demo:MT_LoginAll_Req>
-	</soapenv:Body>
-	</soapenv:Envelope>`;
-	const req1 = http.request(options, function (res1) {
-		const chunks = [];
-
-		res1.on("data", function (chunk) {
-			chunks.push(chunk);
-		});
-
-		res1.on("end", function (chunk) {
-			const body = Buffer.concat(chunks);
-			const xml = body.toString();
-			const data = parser.xml2json(xml, {compact: true, spaces: 4});
-			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body'];
-			res.send({
-				resp: resp
-			});
-		});
-
-		res1.on("error", function (error) {
-			console.error(error);
-		});
-	});
-
-	req1.write(postData);
-
-	req1.end();
-});
 
 app.listen(8000, () => {
 	console.log('Reading on port ', 8000);
