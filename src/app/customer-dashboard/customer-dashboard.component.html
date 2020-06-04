@@ -1,25 +1,19 @@
-<h2 class="ui center aligned icon header">
-    <i class="circular users icon"></i>
-    Customer Dashboard
-</h2>
-<div class="container">
-    <div class="row">
-      <div class="col">
-        <p-chart type="bar" [data]="data"></p-chart>
-      </div>
-      <div class="col">
-        <p-chart type="doughnut" [data]="doughnutData"></p-chart>
-      </div>
+
+  <button class="ui red button" (click)="logout()" id="lbtn">Logout</button>
+
+  <div class="ui left fixed vertical menu inverted">
+    <div class="item">
+      <img class="ui mini image" src="/images/logo.png">
     </div>
-</div>
-<div class="container">
-    <div class="row">
-      <div class="col">
-        <p-chart type="pie" [data]="doughnutData"></p-chart>
-      </div>
-      <div class="col">
-        <p-chart type="line" [data]="data"></p-chart>
-      </div>
-    </div>
-</div>
+    <a class="item">Features</a>
+    <a class="item">Testimonials</a>
+    <a class="item">Sign-in</a>
+  </div>
+  <div class="pusher">
+    <h2 class="ui center aligned icon header">
+      <i class="circular users icon"></i>
+      Customer Dashboard
+  </h2>
+  <p> Hello there is something to test whether the text is shadowed by the side navbar</p>
+  </div>
 

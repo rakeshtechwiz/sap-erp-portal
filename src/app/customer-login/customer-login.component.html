@@ -11,20 +11,16 @@
                 <h1 class="mb-4 kaar-color">Customer Login</h1>
                 <form>
                   <div class="form-label-group">
-                    <input type="text" class="form-control mb-4" placeholder="Customer ID" required autofocus>
+                    <input type="text" id ="uname" class="form-control mb-4" placeholder="Customer ID" required autofocus>
                   </div>
   
                   <div class="form-label-group">
-                    <input type="password" id="inputPassword" class="form-control mb-4" placeholder="Password" required>
+                    <input type="password"  id="inputPassword" class="form-control mb-4" placeholder="Password" required >
                   </div>
-  
-                  <div class="custom-control custom-checkbox mb-3">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label kaar-color" for="customCheck1">Remember password</label>
-                  </div>
-                  <button class="btn btn-primary btn-login mb-2" type="submit">Sign in</button>
-                  <div class="text-center">
-                    <a class="small" href="#">Forgot password?</a></div>
+
+                  
+                    <button (click)="onClick()" class="btn btn-primary btn-login mb-2" type="submit">Sign in</button>
+                  
                 </form>
               </div>
             </div>

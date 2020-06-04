@@ -1,15 +1,84 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 var http = require('follow-redirects').http;
 const cors = require('cors');
 var fs = require('fs');
 const parser = require('xml-js');
+const jwt = require('jsonwebtoken');
+
 
 app = express();
 
 app.use(bodyParser.json());
+// app.use(express.json());
 app.use(cors());
-
+//Users List
+let users = [{
+	"name" : "c001",
+	"password" : "password"
+},
+{
+	"name" : "v001",
+	"password" : "password"
+},
+{
+	"name" : "e001",
+	"password" : "password"
+},
+{
+	"name" : "m001",
+	"password" : "password"
+},
+{
+	"name" : "p001",
+	"password" : "password"
+},
+{
+	"name" : "s001",
+	"password" : "password"
+},
+{
+	"name" : "q001",
+	"password" : "password"
+}
+]
+//Login Route
+app.post('/users/login',(req,res) => {
+	console.log("Someone's here");
+	const user = users.find(user => user.name === req.body[0].name);
+	if(user == null){
+		res.send(JSON.stringify("User not found"));
+	} else {
+		if(user.password === req.body[0].password){
+			console.log("Yay");
+			const CurrentUserName = req.body[0].name;
+			const CurrentUser = { name : CurrentUserName };
+			const accessToken = jwt.sign(CurrentUser , process.env.ACCESS_TOKEN_SECRET);
+			res.json({accessToken: accessToken });
+		}
+		else {
+			res.send(JSON.stringify("Wrong Password"));
+		}
+	}
+});
+//Authentication Route
+app.post('/auth', (req,res) => {
+  console.log("Hey from auth route");
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if(token == null){
+	  res.send(JSON.stringify("Not allowed"));
+  }
+  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET, (err,user) => {
+	  if(err) {
+		  res.send(JSON.stringify("Not allowed"));
+	  }
+	  console.log(user);
+	  res.send(user);
+  })
+});
+//SAP Side
 var options = {
 	'method': 'POST',
 	'port': 50000,
