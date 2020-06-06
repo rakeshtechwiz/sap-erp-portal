@@ -22,6 +22,18 @@ import { VendorLoginComponent } from './vendor-login/vendor-login.component';
 import { CustomerDashboardComponent } from './customer-dashboard/customer-dashboard.component';
 
 import { DataService } from './data.service';
+import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
+import { CustomerFinancialsheetComponent } from './customer-financialsheet/customer-financialsheet.component';
+import { VendorProfileComponent } from './vendor-profile/vendor-profile.component';
+import { VendorDashboardComponent } from './vendor-dashboard/vendor-dashboard.component';
+import { VendorFinancialsheetComponent } from './vendor-financialsheet/vendor-financialsheet.component';
+import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
+import { EmployeeLeavedataComponent } from './employee-leavedata/employee-leavedata.component';
+import { EmployeeSalarypayslipComponent } from './employee-salarypayslip/employee-salarypayslip.component';
+import { MaintenanceDashboardComponent } from './maintenance-dashboard/maintenance-dashboard.component';
+import { ProductionDashboardComponent } from './production-dashboard/production-dashboard.component';
+import { QualityDashboardComponent } from './quality-dashboard/quality-dashboard.component';
+import { SafetyDashboardComponent } from './safety-dashboard/safety-dashboard.component';
 
 
 @NgModule({
@@ -36,7 +48,19 @@ import { DataService } from './data.service';
     EhsmLoginComponent,
     QualityLoginComponent,
     VendorLoginComponent,
-    CustomerDashboardComponent
+    CustomerDashboardComponent,
+    CustomerProfileComponent,
+    CustomerFinancialsheetComponent,
+    VendorProfileComponent,
+    VendorDashboardComponent,
+    VendorFinancialsheetComponent,
+    EmployeeProfileComponent,
+    EmployeeLeavedataComponent,
+    EmployeeSalarypayslipComponent,
+    MaintenanceDashboardComponent,
+    ProductionDashboardComponent,
+    QualityDashboardComponent,
+    SafetyDashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -12,16 +12,19 @@ import swal from 'sweetalert2';
 })
 export class CustomerLoginComponent implements OnInit {
   onClick : Function;
+  
   constructor(private data: DataService , private router: Router) { }
 
   ngOnInit(): void {
+   
     this.onClick = () => {
     let name = (document.getElementById("uname") as HTMLInputElement).value;
     let pass = (document.getElementById("inputPassword") as HTMLInputElement).value;
     if(name == "" || pass == ""){
       swal.fire('Unable to sign in', 'Fill in the required fields' , 'error');
     }
-    const myHeaders = new Headers();
+    else{
+      const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw = JSON.stringify([{ "name" : name , "password" : pass}]);
     const options = {
@@ -47,6 +50,8 @@ export class CustomerLoginComponent implements OnInit {
     })
     }
     
+    }
+   
   }
 
 }

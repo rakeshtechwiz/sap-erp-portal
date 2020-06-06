@@ -11,7 +11,7 @@
                 <h1 class="mb-4 kaar-color">Production Engineer Login</h1>
                 <form>
                   <div class="form-label-group">
-                    <input type="text" class="form-control mb-4" placeholder="Employee ID" required autofocus>
+                    <input type="text" id ="uname" class="form-control mb-4" placeholder="Employee ID" required autofocus>
                   </div>
   
                   <div class="form-label-group">
@@ -19,7 +19,7 @@
                   </div>
   
                  
-                  <button class="btn btn-primary btn-login mb-2" type="submit">Sign in</button>
+                  <button (click)="onClick()" class="btn btn-primary btn-login mb-2" type="submit">Sign in</button>
               
                 </form>
               </div>

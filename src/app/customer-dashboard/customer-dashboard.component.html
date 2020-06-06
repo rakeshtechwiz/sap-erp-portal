@@ -1,19 +1,77 @@
 
-  <button class="ui red button" (click)="logout()" id="lbtn">Logout</button>
+<!DOCTYPE html>
+<html lang="en">
 
-  <div class="ui left fixed vertical menu inverted">
-    <div class="item">
-      <img class="ui mini image" src="/images/logo.png">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+ 
+</head>
+
+<body>
+
+  <div [class.toggled]="show" class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-dark navbar-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading bg-dark mb-4"> 
+          <a href="https://www.kaartech.com/">
+            <img src="https://media.glassdoor.com/sqll/443831/kaar-technologies-squarelogo-1407823308138.png" style="margin-left: 30px;" width="50" height="50" class="d-block ml-4 mb-2 align-center img-thumbnail" id="logo" alt="">
+          </a> 
+          <div class="kaar-color">Kaar Technologies</div>
+      </div>
+      
+      <div class="list-group list-group-flush">
+        <a routerLink="/customerlogin/customerprofile" class="list-group-item list-group-item-action bg-dark text-light">Customer Profile</a>
+        <a routerLink="/customerlogin/customerdashboard" class="list-group-item list-group-item-action bg-info text-light">Customer Dashboard</a>
+        <a routerLink="/customerlogin/customerfinancialsheet" class="list-group-item list-group-item-action bg-dark text-light">Customer Financial Sheet</a>
+      </div>
     </div>
-    <a class="item">Features</a>
-    <a class="item">Testimonials</a>
-    <a class="item">Sign-in</a>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <button (click)="toggle()" class="btn btn-primary" id="menu-toggle">Show/Hide</button>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        </div>
+       
+        <div class="mx-auto order-0">
+            <span class="navbar-brand mx-auto">Customer Portal</span>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <button class="ui red button ml-2" (click)="logout()" id="lbtn">Logout</button>
+                </li>
+            </ul>
+        </div>
+        
+          <button class="ui red button ml-2 navbar-toggler" (click)="logout()" id="lbtn" type="button" data-toggle="collapse" data-target=".dual-collapse2">Logout</button>
+        
+    </nav>
+      <div class="container-fluid">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+      </div>
+      
+    </div>
+    <!-- /#page-content-wrapper -->
+
   </div>
-  <div class="pusher">
-    <h2 class="ui center aligned icon header">
-      <i class="circular users icon"></i>
-      Customer Dashboard
-  </h2>
-  <p> Hello there is something to test whether the text is shadowed by the side navbar</p>
-  </div>
+  <!-- /#wrapper -->
+
+  
+
+ 
+
+</body>
+
+</html>
+
+
+
 

@@ -45,13 +45,11 @@ let users = [{
 ]
 //Login Route
 app.post('/users/login',(req,res) => {
-	console.log("Someone's here");
 	const user = users.find(user => user.name === req.body[0].name);
 	if(user == null){
 		res.send(JSON.stringify("User not found"));
 	} else {
 		if(user.password === req.body[0].password){
-			console.log("Yay");
 			const CurrentUserName = req.body[0].name;
 			const CurrentUser = { name : CurrentUserName };
 			const accessToken = jwt.sign(CurrentUser , process.env.ACCESS_TOKEN_SECRET);
@@ -64,7 +62,6 @@ app.post('/users/login',(req,res) => {
 });
 //Authentication Route
 app.post('/auth', (req,res) => {
-  console.log("Hey from auth route");
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   if(token == null){

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { DataService } from '../data.service';
@@ -10,7 +10,9 @@ import { DataService } from '../data.service';
   styleUrls: ['./customer-dashboard.component.css']
 })
 export class CustomerDashboardComponent implements OnInit {
+  show = false;
   logout: Function;
+  
   constructor(private router:Router,private data:DataService) { 
     
   }
@@ -23,10 +25,54 @@ export class CustomerDashboardComponent implements OnInit {
     }
     this.data.customerAuth(token);
     this.logout = () => {
-      localStorage.clear();
-      this.router.navigate(['customerlogin']);
+      
+      const swalWithBootstrapButtons = swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success ml-4',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          localStorage.clear();
+          this.router.navigate(['customerlogin']);
+          swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Logout Successful',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === swal.DismissReason.cancel
+        ) {
+          
+        }
+      }) 
     }
   }
+ 
+  toggle(){
+    if(this.show){
+        this.show = false;
+        
+    }
+    else {
+      this.show = true;
+      
+    }
+  }
+ 
     
     
    
