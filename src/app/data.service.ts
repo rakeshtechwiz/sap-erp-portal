@@ -16,6 +16,20 @@ export class DataService {
   login(options) {
     return fetch("http://localhost:8000/users/login",options);
   }
+  //Data Routes
+  //Quality Portal
+  //QP InsLot 
+  getQPInsLot(options){
+    return fetch("http://localhost:8000/qp/inslot",options);
+  }
+  //QP ResRecCU
+  getQPResRecCU(options){
+    return fetch("http://localhost:8000/qp/resreccu",options);
+  }
+  //QP UseDecCU
+  getQPUseDecCU(options){
+    return fetch("http://localhost:8000/qp/usedeccu",options);
+  }
   //Auth functions
   customerAuth(token){ 
       const myHeaders = new Headers();
@@ -26,7 +40,7 @@ export class DataService {
         redirect: 'follow'
       }).then((response)=>{
           response.json().then((res) => {
-            if(res.name != "c001"){
+            if(res.name != "C001"){
               swal.fire('Access Denied', 'Login to view this page', 'error');
               this.router.navigate(['customerlogin']);
             }
@@ -42,7 +56,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "v001"){
+          if(res.name != "V001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['vendorlogin']);
           }
@@ -58,7 +72,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "e001"){
+          if(res.name != "E001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['employeelogin']);
           }
@@ -74,7 +88,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "m001"){
+          if(res.name != "M001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['maintenancelogin']);
           }
@@ -90,7 +104,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "p001"){
+          if(res.name != "P001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['shopfloorlogin']);
           }
@@ -106,7 +120,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "s001"){
+          if(res.name != "S001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['ehsmlogin']);
           }
@@ -122,7 +136,7 @@ export class DataService {
       redirect: 'follow'
     }).then((response)=>{
         response.json().then((res) => {
-          if(res.name != "q001"){
+          if(res.name != "Q001"){
             swal.fire('Access Denied', 'Login to view this page', 'error');
             this.router.navigate(['qualitylogin']);
           }

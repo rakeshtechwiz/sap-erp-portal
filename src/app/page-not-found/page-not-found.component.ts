@@ -11,7 +11,7 @@ export class PageNotFoundComponent implements OnInit {
   // onChange(event){
   //    console.log(event.target.value);
   // }
- 
+  
   onClick: Function;
   constructor(private data:DataService) { }
 
@@ -43,5 +43,6 @@ export class PageNotFoundComponent implements OnInit {
     
     }
   }
+ 
 
 }

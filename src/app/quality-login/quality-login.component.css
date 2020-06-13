@@ -19,12 +19,16 @@
 }
 
 #logo {
-  margin-left: 20rem;
-  margin-bottom: 5rem;
+  /* margin-left: 20rem;
+  margin-bottom: 5rem; */
+  margin-left: 20vw;
+  margin-bottom: 20vh;
 }
 #home {
-  margin-bottom: 5rem;
-  margin-left: 39.5rem;
+  /* margin-bottom: 5rem;
+  margin-left: 39.5rem; */
+  margin-bottom: 15vh;
+  margin-left: 43vw;
   color: black;
 }
 

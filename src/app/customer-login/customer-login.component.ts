@@ -12,7 +12,6 @@ import swal from 'sweetalert2';
 })
 export class CustomerLoginComponent implements OnInit {
   onClick : Function;
-  
   constructor(private data: DataService , private router: Router) { }
 
   ngOnInit(): void {
@@ -25,14 +24,14 @@ export class CustomerLoginComponent implements OnInit {
     }
     else{
       const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    const raw = JSON.stringify([{ "name" : name , "password" : pass}]);
-    const options = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
+      myHeaders.append("Content-Type", "application/json");
+      const raw = JSON.stringify([{ "name" : name , "password" : pass}]);
+      const options = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
     this.data.login(options).then((response) => {
       response.json().then((res) => {
         if(res === "User not found"){
