@@ -17,6 +17,23 @@ export class DataService {
     return fetch("http://localhost:8000/users/login",options);
   }
   //Data Routes
+  //Shop Floor Portal
+  //SP PO
+  getSPPO(options){
+    return fetch("http://localhost:8000/sp/po",options);
+  }
+  //SP POCU
+  getSPPOCU(options){
+    return fetch("http://localhost:8000/sp/pocu",options);
+  }
+  //SP ProO
+  getSPProO(options){
+    return fetch("http://localhost:8000/sp/proo",options);
+  }
+  //SP ProOCU
+  getSPProOCU(options){
+    return fetch("http://localhost:8000/sp/proocu",options);
+  }
   //Quality Portal
   //QP InsLot 
   getQPInsLot(options){

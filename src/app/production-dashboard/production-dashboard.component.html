@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -53,7 +60,255 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h4 class="mt-3"><strong>Planned Order</strong></h4>
+        <form>
+          <div class="form-label-group d-flex align-center mb-3 mt-3">
+            <input type="text" id="matnr" style="width:50vw;" placeholder="MaterialNumber" class="form-control">
+            <button (click)="viewPOCreate()" class="btn btn-primary ml-3">Create</button>
+            <button (click)="viewEditPO()" class="btn btn-primary ml-3">Edit</button>
+            <button (click)="viewPO()" class="btn btn-primary ml-3">View</button>
+          </div>  
+        </form>
+        <div *ngIf="tableShow1" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>PlannedOrderNo</th>
+              <th>PlanningPlant</th>
+              <th>ProductionPlant</th>
+              <th>OrderType</th>
+              <th>ProcurementType</th>
+              <th>TotalQuantity</th>
+              <th>OrderStartDate</th>
+              <th>OrderFinishDate</th>
+              <th>PurchasingOrganization</th>
+              <th>StorageLocation</th>
+            </thead>
+            <tbody *ngFor="let po of poArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{po.PlannedOrderNo}}</td>
+                <td>{{po.PlanningPlant}}</td>
+                <td>{{po.ProductionPlant}}</td>
+                <td>{{po.OrderType}}</td>
+                <td>{{po.ProcurementType}}</td>
+                <td>{{po.TotalQuantity}}</td>
+                <td>{{po.OrderStartDate}}</td>
+                <td>{{po.OrderFinishDate}}</td>
+                <td>{{po.PurchasingOrganization}}</td>
+                <td>{{po.StorageLocation}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <form>
+          
+          <div *ngIf="poCreateShow">
+            
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>PlannedOrderNo:</strong><input id="PlannedOrderNo" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>PlanningPlant:</strong><input id="PlanningPlant" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>ProductionPlant:</strong><input id="ProductionPlant" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>OrderType:</strong><input id="OrderType" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>ProcurementType:</strong><input id="ProcurementType" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+             <strong>TotalQuantity:</strong><input id="TotalQuantity" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>OrderStartDate:</strong><input id="OrderStartDate" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>OrderFinishDate:</strong><input id="OrderFinishDate" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>PurchasingOrganization:</strong><input id="PurchasingOrganization" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>StorageLocation:</strong><input id="StorageLocation" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <button (click)="createPO()" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+        <form>
+          
+          <div *ngIf="poEditShow">
+            <strong class="ml-2">PlannedOrderNo:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="ePlannedOrderNo" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].PlannedOrderNo}}">
+            </div>
+            <strong class="ml-2">PlanningPlant:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="ePlanningPlant" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].PlanningPlant}}">
+            </div>
+            <strong class="ml-2">ProductionPlant:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eProductionPlant" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].ProductionPlant}}">
+            </div>
+            <strong class="ml-2">OrderType:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eOrderType" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].OrderType}}">
+            </div>
+            <strong class="ml-2">ProcurementType:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eProcurementType" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].ProcurementType}}">
+            </div>
+            <strong class="ml-2">TotalQuantity:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+             <input id="eTotalQuantity" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].TotalQuantity}}">
+            </div>
+            <strong class="ml-2">OrderStartDate:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eOrderStartDate" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].OrderStartDate}}">
+            </div>
+            <strong class="ml-2">OrderFinishDate:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eOrderFinishDate" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].OrderFinishDate}}">
+            </div>
+            <strong class="ml-2">PurchasingOrganization:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="ePurchasingOrganization" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].PurchasingOrganization}}">
+            </div>
+            <strong class="ml-2">StorageLocation:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eStorageLocation" type="text" style="width:50vw;"  class="form-control ml-2" value="{{poArray[0].StorageLocation}}">
+            </div>
+            <button (click)="editPO()" class="btn btn-primary">Update</button>
+          </div>
+        </form>
+        <!-- Production Order -->
+        <h4 class="mt-3"><strong>Production Order</strong></h4>
+        <form>
+          <div class="form-label-group d-flex align-center mb-3 mt-3">
+            <input type="text"  style="width:50vw;" id="PlannedOrderNo2" placeholder="Planned Order Number" class="form-control">
+            <button (click)="viewProOCreate()" class="btn btn-primary ml-3">Create</button>
+            <button (click)="viewEditProO()" class="btn btn-primary ml-3">Edit</button>
+            <button (click)="viewProO()" class="btn btn-primary ml-3">View</button>
+          </div>  
+        </form>
+        <div *ngIf="tableShow2" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>ProductionOrderNumber</th>
+              <th>OrderType</th>
+              <th>OrderCategory</th>
+              <th>EnteredBy</th>
+              <th>CreatedOn</th>
+              <th>CompanyCode</th>
+              <th>Plant</th>
+              <th>BusinessArea</th>
+              <th>ControllingArea</th>
+              <th>Location</th>
+            </thead>
+            <tbody *ngFor="let pro of proOArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{pro.ProductionOrderNumber}}</td>
+                <td>{{pro.OrderType}}</td>
+                <td>{{pro.OrderCategory}}</td>
+                <td>{{pro.EnteredBy}}</td>
+                <td>{{pro.CreatedOn}}</td>
+                <td>{{pro.CompanyCode}}</td>
+                <td>{{pro.Plant}}</td>
+                <td>{{pro.BusinessArea}}</td>
+                <td>{{pro.ControllingArea}}</td>
+                <td>{{pro.Location}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <form>
+          
+          <div *ngIf="proOCreateShow">
+            
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>ProductionOrderNumber:</strong><input id="ProductionOrderNumber" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>OrderType:</strong><input id="OrderType2" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>OrderCategory:</strong><input id="OrderCategory" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>EnteredBy:</strong><input id="EnteredBy" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>CreatedOn:</strong><input id="CreatedOn" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+             <strong>CompanyCode:</strong><input id="CompanyCode" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>Plant:</strong><input id="Plant" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>BusinessArea:</strong><input id="BusinessArea" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>ControllingArea:</strong><input id="ControllingArea" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <strong>Location:</strong><input id="Location" type="text" style="width:50vw;"  class="form-control ml-2">
+            </div>
+            <button (click)="createProO()" class="btn btn-primary">Create</button>
+          </div>
+        </form>
+        <form>
+          
+          <div *ngIf="proOEditShow">
+            <strong class="ml-2">ProductionOrderNumber:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eProductionOrderNumber" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].ProductionOrderNumber}}">
+            </div>
+            <strong class="ml-2">OrderType:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eOrderType2" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].OrderType}}">
+            </div>
+            <strong class="ml-2">OrderCategory:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eOrderCategory" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].OrderCategory}}">
+            </div>
+            <strong class="ml-2">EnteredBy:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eEnteredBy" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].EnteredBy}}">
+            </div>
+            <strong class="ml-2">CreatedOn:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eCreatedOn" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].CreatedOn}}">
+            </div>
+            <strong class="ml-2">CompanyCode:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+             <input id="eCompanyCode" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].CompanyCode}}">
+            </div>
+            <strong class="ml-2">Plant:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="ePlant" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].Plant}}">
+            </div>
+            <strong class="ml-2">BusinessArea:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eBusinessArea" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].BusinessArea}}">
+            </div>
+            <strong class="ml-2">ControllingArea:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eControllingArea" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].ControllingArea}}">
+            </div>
+            <strong class="ml-2">Location:</strong>
+            <div class="form-label-group d-flex align-center mb-3 mt-3">
+              <input id="eLocation" type="text" style="width:50vw;"  class="form-control ml-2" value="{{proOArray[0].Location}}">
+            </div>
+            <button (click)="editProO()" class="btn btn-primary">Update</button>
+          </div>
+        </form>
       </div>
       
     </div>

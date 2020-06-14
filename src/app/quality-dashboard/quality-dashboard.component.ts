@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { DataService } from '../data.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-quality-dashboard',
@@ -15,7 +16,7 @@ export class QualityDashboardComponent implements OnInit {
   useShow = false;
   logout: Function;
   insLotArray = [];
-  constructor(private router:Router,private data:DataService) { }
+  constructor(private router:Router,private data:DataService , private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem("secret");
@@ -73,7 +74,7 @@ export class QualityDashboardComponent implements OnInit {
     }
   }
   viewTable(){
-    
+    this.spinner.show();
     const myHeaders = new Headers();
     let matnr = (document.getElementById("matnr") as HTMLInputElement).value;
       myHeaders.append("Content-Type", "application/json");
@@ -87,6 +88,7 @@ export class QualityDashboardComponent implements OnInit {
     this.data.getQPInsLot(options).then((response) => {
       response.json().then((res) => {
         this.insLotArray.push(res);
+        this.spinner.hide();
         this.tableShow = true;
       })
     })
@@ -98,6 +100,7 @@ export class QualityDashboardComponent implements OnInit {
     this.useShow = true;
   }
   createRecord(){
+    this.spinner.show();
     const myHeaders = new Headers();
     let InspectionLotNo = (document.getElementById("InspectionLotNo") as HTMLInputElement).value;
     let InspectionCharNo = (document.getElementById("InspectionCharNo") as HTMLInputElement).value;
@@ -133,6 +136,7 @@ export class QualityDashboardComponent implements OnInit {
         
         if(res.status == "Success"){
           (document.getElementById("InspectionLotNo") as HTMLInputElement).value = "";
+          this.spinner.hide();
           this.recordShow = false;
           swal.fire({
             position: 'center',
@@ -151,6 +155,7 @@ export class QualityDashboardComponent implements OnInit {
     })
   }
   createUsage(){
+    this.spinner.show();
     const myHeaders = new Headers();
     let InspectionLotNo = (document.getElementById("InspectionLotNoUD") as HTMLInputElement).value;
     let Date = (document.getElementById("Date") as HTMLInputElement).value;
@@ -188,6 +193,7 @@ export class QualityDashboardComponent implements OnInit {
         
         if(res.status == "Success"){
           (document.getElementById("InspectionLotNoUD") as HTMLInputElement).value = "";
+          this.spinner.hide();
           this.useShow = false;
           swal.fire({
             position: 'center',

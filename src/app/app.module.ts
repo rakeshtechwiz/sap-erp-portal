@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -70,9 +71,11 @@ import { SafetyDashboardComponent } from './safety-dashboard/safety-dashboard.co
     SliderModule,
     FormsModule,
     ButtonModule,
-    ChartModule
+    ChartModule,
+    NgxSpinnerModule
   ],
   providers: [DataService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
