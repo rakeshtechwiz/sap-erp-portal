@@ -866,6 +866,7 @@ app.post('/login', (req, res) => {
 			const xml = body.toString();
 			const data = parser.xml2json(xml, {compact: true, spaces: 4});
 			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_IM.Response']['ITAB']['item'];
+			console.log(resp);
 			res.send(resp);
 		});
 

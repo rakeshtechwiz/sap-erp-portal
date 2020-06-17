@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { DataService } from '../data.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-safety-dashboard',
@@ -19,7 +20,7 @@ export class SafetyDashboardComponent implements OnInit {
   riskArray: any;
   logout: Function;
   initial: Function;
-  constructor(private router:Router,private data:DataService) { }
+  constructor(private router:Router,private data:DataService, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     const token = localStorage.getItem("secret");
@@ -28,7 +29,10 @@ export class SafetyDashboardComponent implements OnInit {
       this.router.navigate(['ehsmlogin']);
     }
     this.data.ehsmAuth(token);
-    this.initial = () => {
+    this.initial = (spinnerShow) => {
+      if(spinnerShow == "yes"){
+        this.spinner.show();
+      }
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({"working" : "yes"});
@@ -42,10 +46,13 @@ export class SafetyDashboardComponent implements OnInit {
         response.json().then((res) => {
          this.incidentArray = res;
          this.imshow = true;
+         if(spinnerShow == "yes"){
+          this.spinner.hide();
+        }
         })
       })
     }
-    this.initial();
+    this.initial("yes");
       
     this.logout = () => {
       
@@ -85,6 +92,7 @@ export class SafetyDashboardComponent implements OnInit {
     }
   }
   viewRA(objnr){
+    this.spinner.show();
     const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({"objnr" : objnr});
@@ -99,6 +107,7 @@ export class SafetyDashboardComponent implements OnInit {
          this.riskArray = res;
          this.imshow = false;
          this.rashow = true;
+         this.spinner.hide();
         })
       })
   }
@@ -113,6 +122,7 @@ export class SafetyDashboardComponent implements OnInit {
     this.imcushow = true;
   }
   createIM(){
+    this.spinner.show();
     const myHeaders = new Headers();
     let ObjectNumber = (document.getElementById("ObjectNumber") as HTMLInputElement).value;
     let IncidentTitle = (document.getElementById("IncidentTitle") as HTMLInputElement).value;
@@ -155,7 +165,7 @@ export class SafetyDashboardComponent implements OnInit {
       };
     this.data.getEPIMCU(options).then((response) => {
       response.json().then((res) => {
-        
+        this.spinner.hide();
         if(res.status == "Success"){
           this.imcushow = false;
           swal.fire({
@@ -165,7 +175,7 @@ export class SafetyDashboardComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           })
-          this.initial();
+          this.initial("No");
          
         }
         else {
@@ -182,6 +192,7 @@ export class SafetyDashboardComponent implements OnInit {
     this.editIndex = i;
   }
   updateIM(){
+    this.spinner.show();
     const myHeaders = new Headers();
     let ObjectNumber = (document.getElementById("eObjectNumber") as HTMLInputElement).value;
     let IncidentTitle = (document.getElementById("eIncidentTitle") as HTMLInputElement).value;
@@ -224,7 +235,7 @@ export class SafetyDashboardComponent implements OnInit {
       };
     this.data.getEPIMCU(options).then((response) => {
       response.json().then((res) => {
-        
+        this.spinner.hide();
         if(res.status == "Success"){
           this.imeditshow= false;
           swal.fire({
