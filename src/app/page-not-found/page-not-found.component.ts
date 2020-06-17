@@ -13,19 +13,18 @@ export class PageNotFoundComponent implements OnInit {
   // }
   
   onClick: Function;
+  sampleArray : any;
   constructor(private data:DataService) { }
 
  ngOnInit(): void {
     this.onClick = () => {
       
-        let input = ((document.getElementById("vendorID") as HTMLInputElement));
-        let button = (document.querySelector('#search') as HTMLButtonElement);
-        let para = (document.querySelector('#hello') as HTMLParagraphElement);
-        console.log(input.value);
+      let objnr = (document.getElementById("vendorID") as HTMLInputElement).value;
+      
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
-        const id = input.value;
-      const raw = JSON.stringify({vendId: id});
+  
+      const raw = JSON.stringify({"objnr": objnr});
       const requestOptions = {
       method: 'POST',
       headers: myHeaders,
@@ -35,7 +34,11 @@ export class PageNotFoundComponent implements OnInit {
        this.data.getData(requestOptions).then((response)=>{
          response.json().then((result)=>{
            console.log(result);
-           para.textContent = `${result.vendorAddr} is the vendor address, and his name is ${result.vendorName}`;
+           this.sampleArray = result;
+           console.log(this.sampleArray);
+           console.log(result[0]['OBJNR']['_text']);
+           console.log(this.sampleArray[0]['OBJNR']['_text']);
+           alert("Check console!!");
          })
        })
         

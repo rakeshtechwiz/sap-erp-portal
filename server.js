@@ -553,31 +553,66 @@ req1.write(postData);
 req1.end();
 	
 });
-//Test wsdl
-var toptions = {
-	'method': 'POST',
-	'port': 50000,
-	'host': 'dxktpipo.kaarcloud.com',
-	'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SaiRakesh&receiverParty=&receiverService=&interface=SI_Vendor1_Req&interfaceNamespace=http://training.com/sairakesh',
-	'headers': {
-		'Content-Type': 'application/xml',
-		'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
-	},
-	'maxRedirects': 20
-};
-
-
-app.post('/login', (req, res) => {
-	const vendorID = req.body.vendId;
-	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sair="http://training.com/sairakesh">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <sair:MT_Vendor1_Req>
-         <Vendor1ID>${vendorID}</Vendor1ID>
-      </sair:MT_Vendor1_Req>
-   </soapenv:Body>
-</soapenv:Envelope>`;
-	const req1 = http.request(toptions, function (res1) {
+//EP Routes
+//EP IM Route
+app.post('/ep/im',(req,res) => {
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_IM&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_IM>
+		  <!--You may enter the following 2 items in any order-->
+		  <!--Optional:-->
+		  <OBJNR>?</OBJNR>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<OBJNR>?</OBJNR>
+				<!--Optional:-->
+				<TITLE>?</TITLE>
+				<!--Optional:-->
+				<USER_ID_CR>?</USER_ID_CR>
+				<!--Optional:-->
+				<ORG_ID>?</ORG_ID>
+				<!--Optional:-->
+				<PLANT_ID>?</PLANT_ID>
+				<!--Optional:-->
+				<LOC_ROOT_KEY_REF>?</LOC_ROOT_KEY_REF>
+				<!--Optional:-->
+				<START_TIMESTAMP>?</START_TIMESTAMP>
+				<!--Optional:-->
+				<END_TIMESTAMP>?</END_TIMESTAMP>
+				<!--Optional:-->
+				<REP_TIMESTAMP>?</REP_TIMESTAMP>
+				<!--Optional:-->
+				<LOSS_OF_PROD_TS>?</LOSS_OF_PROD_TS>
+				<!--Optional:-->
+				<STREET_HOUSE_NUM>?</STREET_HOUSE_NUM>
+				<!--Optional:-->
+				<POSTAL_CODE>?</POSTAL_CODE>
+				<!--Optional:-->
+				<CITY>?</CITY>
+				<!--Optional:-->
+				<COUNTRY>?</COUNTRY>
+				<!--Optional:-->
+				<REGION>?</REGION>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_IM>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
 		const chunks = [];
 
 		res1.on("data", function (chunk) {
@@ -588,12 +623,250 @@ app.post('/login', (req, res) => {
 			const body = Buffer.concat(chunks);
 			const xml = body.toString();
 			const data = parser.xml2json(xml, {compact: true, spaces: 4});
-			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_Vendor1_Resp'];
-			res.send({
-				vendorAddr: resp['VendorAddr']['_text'],
-				vendorDesc: resp['VendorDesc']['_text'],
-				vendorName: resp['VendorName']['_text']
-			});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_IM.Response']['ITAB']['item'];
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//EP RA Route
+app.post('/ep/ra',(req,res) => {
+	let objnr = req.body.objnr;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_RA&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_RISKA>
+		  <!--You may enter the following 2 items in any order-->
+		  <OBJNR>${objnr}</OBJNR>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<MANDT>?</MANDT>
+				<!--Optional:-->
+				<OBJNR>?</OBJNR>
+				<!--Optional:-->
+				<EPTYPE>?</EPTYPE>
+				<!--Optional:-->
+				<EPID>?</EPID>
+				<!--Optional:-->
+				<SEVERE>?</SEVERE>
+				<!--Optional:-->
+				<PROBLTY>?</PROBLTY>
+				<!--Optional:-->
+				<ACID>?</ACID>
+				<!--Optional:-->
+				<ACCAT>?</ACCAT>
+				<!--Optional:-->
+				<ACTYPE>?</ACTYPE>
+				<!--Optional:-->
+				<ACPRIO>?</ACPRIO>
+				<!--Optional:-->
+				<DATCONTR>?</DATCONTR>
+				<!--Optional:-->
+				<TIMECONTR>?</TIMECONTR>
+				<!--Optional:-->
+				<RESPPCONTR>?</RESPPCONTR>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_RISKA>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_RISKA.Response']['ITAB']['item'];
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//EP IMCU Route
+app.post('/ep/imcu',(req,res) => {
+	const ObjectNumber = req.body.ObjectNumber;
+	const Region = req.body.Region;
+	const IncidentTitle = req.body.IncidentTitle;
+	const ObjectCreatedBy = req.body.ObjectCreatedBy;
+	const OrganizationalID = req.body.OrganizationalID;
+	const PlantID = req.body.PlantID;
+	const Location = req.body.Location;
+	const StartDate = req.body.StartDate;
+	const EndDate = req.body.EndDate;
+	const DateOfIncidentReporting = req.body.DateOfIncidentReporting;
+	const LossOfProduction = req.body.LossOfProduction;
+	const StreetOrHouseNum = req.body.StreetOrHouseNum;
+	const PostalCode = req.body.PostalCode;
+	const City = req.body.City;
+	const Country = req.body.Country;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_IMCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_IMCU_Req>
+		  <ObjectNumber>${ObjectNumber}</ObjectNumber>
+		  <Region>${Region}</Region>
+		  <IncidentTitle>${IncidentTitle}</IncidentTitle>
+		  <ObjectCreatedBy>${ObjectCreatedBy}</ObjectCreatedBy>
+		  <OrganizationalID>${OrganizationalID}</OrganizationalID>
+		  <PlantID>${PlantID}</PlantID>
+		  <Location>${Location}</Location>
+		  <StartDate>${StartDate}</StartDate>
+		  <EndDate>${EndDate}</EndDate>
+		  <DateOfIncidentReporting>${DateOfIncidentReporting}</DateOfIncidentReporting>
+		  <LossOfProduction>${LossOfProduction}</LossOfProduction>
+		  <StreetOrHouseNum>${StreetOrHouseNum}</StreetOrHouseNum>
+		  <PostalCode>${PostalCode}</PostalCode>
+		  <City>${City}</City>
+		  <Country>${Country}</Country>
+	   </rak:MT_SRK_IMCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_IMCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Test wsdl
+var options = {
+	'method': 'POST',
+	'port': 50000,
+	'host': 'dxktpipo.kaarcloud.com',
+	'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_IM&interfaceNamespace=http://rakeshsaperp.com',
+	'headers': {
+		'Content-Type': 'application/xml',
+		'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+	},
+	'maxRedirects': 20
+};
+
+
+app.post('/login', (req, res) => {
+	// const vendorID = req.body.vendId;
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_IM>
+		  <!--You may enter the following 2 items in any order-->
+		  <!--Optional:-->
+		  <OBJNR>?</OBJNR>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<OBJNR>?</OBJNR>
+				<!--Optional:-->
+				<TITLE>?</TITLE>
+				<!--Optional:-->
+				<USER_ID_CR>?</USER_ID_CR>
+				<!--Optional:-->
+				<ORG_ID>?</ORG_ID>
+				<!--Optional:-->
+				<PLANT_ID>?</PLANT_ID>
+				<!--Optional:-->
+				<LOC_ROOT_KEY_REF>?</LOC_ROOT_KEY_REF>
+				<!--Optional:-->
+				<START_TIMESTAMP>?</START_TIMESTAMP>
+				<!--Optional:-->
+				<END_TIMESTAMP>?</END_TIMESTAMP>
+				<!--Optional:-->
+				<REP_TIMESTAMP>?</REP_TIMESTAMP>
+				<!--Optional:-->
+				<LOSS_OF_PROD_TS>?</LOSS_OF_PROD_TS>
+				<!--Optional:-->
+				<STREET_HOUSE_NUM>?</STREET_HOUSE_NUM>
+				<!--Optional:-->
+				<POSTAL_CODE>?</POSTAL_CODE>
+				<!--Optional:-->
+				<CITY>?</CITY>
+				<!--Optional:-->
+				<COUNTRY>?</COUNTRY>
+				<!--Optional:-->
+				<REGION>?</REGION>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_IM>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_IM.Response']['ITAB']['item'];
+			res.send(resp);
 		});
 
 		res1.on("error", function (error) {

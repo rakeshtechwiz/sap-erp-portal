@@ -47,6 +47,19 @@ export class DataService {
   getQPUseDecCU(options){
     return fetch("http://localhost:8000/qp/usedeccu",options);
   }
+  //EHSM Portal
+  //EP IM
+  getEPIM(options){
+    return fetch("http://localhost:8000/ep/im",options);
+  }
+  //EP RA
+  getEPRA(options){
+    return fetch("http://localhost:8000/ep/ra",options);
+  }
+  //EP IMCU
+  getEPIMCU(options){
+    return fetch("http://localhost:8000/ep/imcu",options);
+  }
   //Auth functions
   customerAuth(token){ 
       const myHeaders = new Headers();

@@ -53,7 +53,221 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h2 *ngIf="imshow" class="text-center mt-3"><strong>Incident History</strong></h2>
+        <button *ngIf="imshow" (click)="viewIMCU()" class="btn btn-success mb-2 d-inline"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Incident</button>
+        <div *ngIf="imshow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th> </th>
+              <th>ObjectNumber</th>
+              <th>IncidentTitle</th>
+              <th>ObjectCreatedBy</th>
+              <th>OrganizationalID</th>
+              <th>PlantID</th>
+              <th>Location</th>
+              <th>StartDate</th>
+              <th>EndDate</th>
+              <th>DateOfIncidentReporting</th>
+              <th>LossOfProduction</th>
+              <th>StreetOrHouseNum</th>
+              <th>PostalCode</th>
+              <th>City</th>
+              <th>Country</th>
+              <th>Region</th>
+            </thead>
+            <tbody *ngFor="let incident of incidentArray; index as i">
+              <tr align="center">
+                <td><button (click)="viewRA(incident.OBJNR._text)" class="btn btn-primary btn-sm">View</button></td>
+                <td><button (click)="viewEdit(i)" class="btn btn-warning btn-sm">Edit</button></td>
+                <td>{{incident.OBJNR._text}}</td>
+                <td>{{incident.TITLE._text}}</td>
+                <td>{{incident.USER_ID_CR._text}}</td>
+                <td>{{incident.ORG_ID._text}}</td>
+                <td>{{incident.PLANT_ID._text}}</td>
+                <td>{{incident.LOC_ROOT_KEY_REF._text}}</td>
+                <td>{{incident.START_TIMESTAMP._text}}</td>
+                <td>{{incident.END_TIMESTAMP._text}}</td>
+                <td>{{incident.REP_TIMESTAMP._text}}</td>
+                <td>{{incident.LOSS_OF_PROD_TS._text}}</td>
+                <td>{{incident.STREET_HOUSE_NUM._text}}</td>
+                <td>{{incident.POSTAL_CODE._text}}</td>
+                <td>{{incident.CITY._text}}</td>
+                <td>{{incident.COUNTRY._text}}</td>
+                <td>{{incident.REGION._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button *ngIf="rashow || imcushow || imeditshow" (click)="backtoim()" style="margin-left: 36vw" class="btn btn-danger mt-3 ">Back to Incident History </button>
+        <h3 *ngIf="rashow" class="text-center mt-3"><strong>Risk Assessment</strong></h3>
+        <div *ngIf="rashow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>ObjectNumber</th>
+              <th>AgentType</th>
+              <th>Agent</th>
+              <th>Severity</th>
+              <th>Probability</th>
+              <th>SafetyMeasureKey</th>
+              <th>SafetyMeasureCategory</th>
+              <th>SafetyMeasureType</th>
+              <th>Priority</th>
+              <th>DateofCheck</th>
+              <th>TimeofCheck</th>
+              <th>PersonResponsible</th>
+            </thead>
+            <tbody *ngFor="let risk of riskArray">
+              <tr align="center">
+                <td>{{risk.OBJNR._text}}</td>
+                <td>{{risk.EPTYPE._text}}</td>
+                <td>{{risk.EPID._text}}</td>
+                <td>{{risk.SEVERE._text}}</td>
+                <td>{{risk.PROBLTY._text}}</td>
+                <td>{{risk.ACID._text}}</td>
+                <td>{{risk.ACCAT._text}}</td>
+                <td>{{risk.ACTYPE._text}}</td>
+                <td>{{risk.ACPRIO._text}}</td>
+                <td>{{risk.DATCONTR._text}}</td>
+                <td>{{risk.TIMECONTR._text}}</td>
+                <td>{{risk.RESPPCONTR._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="imcushow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Create Incident</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>ObjectNumber</strong></label>
+            <input type="text" id="ObjectNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>IncidentTitle</strong></label>
+            <input type="text" id="IncidentTitle" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>ObjectCreatedBy</strong></label>
+            <input type="text" id="ObjectCreatedBy" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>OrganizationalID</strong></label>
+            <input type="text" id="OrganizationalID" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PlantID</strong></label>
+            <input type="text" id="PlantID" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Location</strong></label>
+            <input type="text" id="Location" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>StartDate</strong></label>
+            <input type="text" id="StartDate"  class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>EndDate</strong></label>
+            <input type="text" id="EndDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>DateOfIncidentReporting</strong></label>
+            <input type="text" id="DateOfIncidentReporting" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>LossOfProduction</strong></label>
+            <input type="text" id="LossOfProduction" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>StreetOrHouseNum</strong></label>
+            <input type="text" id="StreetOrHouseNum" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PostalCode</strong></label>
+            <input type="text" id="PostalCode" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>City</strong></label>
+            <input type="text" id="City" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Country</strong></label>
+            <input type="text" id="Country" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Region</strong></label>
+            <input type="text" id="Region" class="form-control">
+          </div>
+          <button (click)="createIM()" style="margin-left: 17vw" class="btn btn-success mt-3">Create</button>
+        </form>
+        </div>
+        <div *ngIf="imeditshow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Edit Incident</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>ObjectNumber</strong></label>
+            <input type="text" disabled="true" id="eObjectNumber" class="form-control" value="{{incidentArray[editIndex].OBJNR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>IncidentTitle</strong></label>
+            <input type="text" id="eIncidentTitle" class="form-control" value="{{incidentArray[editIndex].TITLE._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>ObjectCreatedBy</strong></label>
+            <input type="text" id="eObjectCreatedBy" class="form-control" value="{{incidentArray[editIndex].USER_ID_CR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>OrganizationalID</strong></label>
+            <input type="text" id="eOrganizationalID" class="form-control" value="{{incidentArray[editIndex].ORG_ID._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PlantID</strong></label>
+            <input type="text" id="ePlantID" class="form-control" value="{{incidentArray[editIndex].PLANT_ID._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Location</strong></label>
+            <input type="text" id="eLocation" class="form-control" value="{{incidentArray[editIndex].LOC_ROOT_KEY_REF._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>StartDate</strong></label>
+            <input type="text" id="eStartDate"  class="form-control" value="{{incidentArray[editIndex].START_TIMESTAMP._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>EndDate</strong></label>
+            <input type="text" id="eEndDate" class="form-control" value="{{incidentArray[editIndex].END_TIMESTAMP._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>DateOfIncidentReporting</strong></label>
+            <input type="text" id="eDateOfIncidentReporting" class="form-control" value="{{incidentArray[editIndex].REP_TIMESTAMP._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>LossOfProduction</strong></label>
+            <input type="text" id="eLossOfProduction" class="form-control" value="{{incidentArray[editIndex].LOSS_OF_PROD_TS._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>StreetOrHouseNum</strong></label>
+            <input type="text" id="eStreetOrHouseNum" class="form-control" value="{{incidentArray[editIndex].STREET_HOUSE_NUM._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PostalCode</strong></label>
+            <input type="text" id="ePostalCode" class="form-control" value="{{incidentArray[editIndex].POSTAL_CODE._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>City</strong></label>
+            <input type="text" id="eCity" class="form-control" value="{{incidentArray[editIndex].CITY._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Country</strong></label>
+            <input type="text" id="eCountry" class="form-control" value="{{incidentArray[editIndex].COUNTRY._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Region</strong></label>
+            <input type="text" id="eRegion" class="form-control" value="{{incidentArray[editIndex].REGION._text}}">
+          </div>
+          <button (click)="updateIM()" style="margin-left: 17vw" class="btn btn-success mt-3">Update</button>
+        </form>
+        </div>
+
       </div>
       
     </div>
