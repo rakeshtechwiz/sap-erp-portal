@@ -59,22 +59,17 @@
           <button class="ui red button ml-2 navbar-toggler" (click)="logout()" id="lbtn" type="button" data-toggle="collapse" data-target=".dual-collapse2">Logout</button>
         
     </nav>
-      <div class="container-fluid">
-        <h4 class="mt-3"><strong>Inspection Lot</strong></h4>
-        <form>
-          <div class="form-label-group d-flex align-center mb-3 mt-3">
-            <input type="text" id="matnr" style="width:50vw;" placeholder="MaterialNumber" class="form-control">
-            <button (click)="viewTable()" class="btn btn-primary ml-3">View</button>
-          </div>
-          
-          
-        </form>
+    <button *ngIf="recordShow || useShow" (click)="backtoil()" style="margin-left: 36vw" class="btn btn-danger mt-3 ">Back to Inspection Lots </button>
+      <div  class="container-fluid">
+        <h4 *ngIf="insShow" class="text-center mt-3"><strong>Inspection Lot</strong></h4>
         
         <div *ngIf="tableShow" class="table-responsive">     
           <table id="mytable" class="table table-bordred table-striped">
             <thead>
               <th> </th>
+              <th> </th>
               <th>InspectionLotNo</th>
+              <th>MaterialNo</th>
               <th>Plant</th>
               <th>InspectionType</th>
               <th>ObjectNumber</th>
@@ -88,100 +83,120 @@
             </thead>
             <tbody *ngFor="let inslot of insLotArray">
               <tr align="center">
-                <td> </td>
-                <td (click)="clickCheck(inslot.InspectionLotNo)">{{inslot.InspectionLotNo}}</td>
-                <td>{{inslot.Plant}}</td>
-                <td>{{inslot.InspectionType}}</td>
-                <td>{{inslot.ObjectNumber}}</td>
-                <td>{{inslot.ObjectCategory}}</td>
-                <td>{{inslot.CreationDate}}</td>
-                <td>{{inslot.CreationTime}}</td>
-                <td>{{inslot.InsStartDate}}</td>
-                <td>{{inslot.InsStartTime}}</td>
-                <td>{{inslot.InsEndDate}}</td>
-                <td>{{inslot.InsEndTime}}</td>
+                <td><button (click)="recordForm(inslot.InspectionLotNo)" class="btn btn-primary btn-sm">RecordResult</button> </td>
+                <td><button (click)="usageForm(inslot.InspectionLotNo)" class="btn btn-warning btn-sm">UsageDecision</button></td>
+                <td>{{inslot.INSLOTNO._text}}</td>
+                <td>{{inslot.MATNR._text}}</td>
+                <td>{{inslot.PLANT._text}}</td>
+                <td>{{inslot.INSTYPE._text}}</td>
+                <td>{{inslot.OBJNO._text}}</td>
+                <td>{{inslot.OBJCAT._text}}</td>
+                <td>{{inslot.DATCREATE._text}}</td>
+                <td>{{inslot.TIMCREATE._text}}</td>
+                <td>{{inslot.STARTDAT._text}}</td>
+                <td>{{inslot.STARTTIM._text}}</td>
+                <td>{{inslot.ENDDAT._text}}</td>
+                <td>{{inslot.ENDTIM._text}}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <h4 class="mt-3"><strong>Result Recording</strong></h4> 
+        <div *ngIf="recordShow" style="width: 40vw" class="container">
+        <h4  class="text-center mt-3"><strong>Result Recording</strong></h4> 
         <form>
-          <div class="form-label-group d-flex align-center mb-3 mt-3">
-            <input type="text" style="width:50vw;" id="InspectionLotNo" placeholder="InspectionLotNumber" class="form-control">
-            <button (click)="viewRecord()" class="btn btn-primary ml-3">Record Result</button>
-          </div>
+        
           <div *ngIf="recordShow">
             
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>InspectionCharNo:</strong><input id="InspectionCharNo" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>InspectionCharNo</strong></label>
+              <input type="text" id="InspectionCharNo" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>ResultAttribute:</strong><input id="ResultAttribute" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>ResultAttribute</strong></label>
+              <input type="text" id="ResultAttribute" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>InspectorName:</strong><input id="InspectorName" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>InspectorName</strong></label>
+              <input type="text" id="InspectorName" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>InspectionStartDate:</strong><input id="InspectionStartDate" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>InspectionStartDate</strong></label>
+              <input type="text" id="InspectionStartDate" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>InspectionEndDate:</strong><input id="InspectionEndDate" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>InspectionEndDate</strong></label>
+              <input type="text" id="InspectionEndDate" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-             <strong>NoOfSampleUnits:</strong><input id="NoOfSampleUnits" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>NoOfSampleUnits</strong></label>
+              <input type="text" id="NoOfSampleUnits" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>NoOfDefects:</strong><input id="NoOfDefects" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>NoOfDefects</strong></label>
+              <input type="text" id="NoOfDefects"  class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>ValuesAboveTR:</strong><input id="ValuesAboveTR" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>ValuesAboveTR</strong></label>
+              <input type="text" id="ValuesAboveTR" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>ValuesBelowTR:</strong><input id="ValuesBelowTR" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>ValuesBelowTR</strong></label>
+              <input type="text" id="ValuesBelowTR" class="form-control">
             </div>
-            <button (click)="createRecord()" class="btn btn-primary">Create</button>
+          
+            <button (click)="createRecord()" style="margin-left: 17vw" class="btn btn-success">Create</button>
           </div>
         </form>
-        <h4 class="mt-3"><strong>Usage Decision</strong></h4> 
+      </div>
+      <div *ngIf="useShow" style="width: 40vw" class="container">
+        <h4 *ngIf="useShow" class="text-center mt-3"><strong>Usage Decision</strong></h4> 
         <form>
-          <div class="form-label-group d-flex align-center mb-3 mt-3">
-            <input type="text" style="width:50vw;" id="InspectionLotNoUD" placeholder="InspectionLotNumber" class="form-control">
-            <button (click)="viewUse()" class="btn btn-primary ml-3">Provide Usage Decision</button>
-          </div>
           <div *ngIf="useShow">
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>Date:</strong><input id="Date" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>Date</strong></label>
+              <input type="text" id="Date" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>Counter:</strong><input id="Counter" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>Counter</strong></label>
+              <input type="text" id="Counter" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>Plant:</strong><input id="Plant" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>Plant</strong></label>
+              <input type="text" id="Plant" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>SelectedSet:</strong><input id="SelectedSet" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>SelectedSet</strong></label>
+              <input type="text" id="SelectedSet" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>CodeGroup:</strong><input id="CodeGroup" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>CodeGroup</strong></label>
+              <input type="text" id="CodeGroup" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-             <strong>Code:</strong><input id="Code" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>Code</strong></label>
+              <input type="text" id="Code" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>FollowUpAction:</strong><input id="FollowUpAction" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>FollowUpAction</strong></label>
+              <input type="text" id="FollowUpAction"  class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>QualityScore:</strong><input id="QualityScore" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>QualityScore</strong></label>
+              <input type="text" id="QualityScore" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>PersonResponsible:</strong><input id="PersonResponsible" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>PersonResponsible</strong></label>
+              <input type="text" id="PersonResponsible" class="form-control">
             </div>
-            <div class="form-label-group d-flex align-center mb-3 mt-3">
-              <strong>Time:</strong><input id="Time" type="text" style="width:50vw;"  class="form-control ml-2">
+            <div class="form-group">
+              <label><strong>Time</strong></label>
+              <input type="text" id="Time" class="form-control">
             </div>
-            <button (click)="createUsage()" class="btn btn-primary">Create</button>
+          
+            <button (click)="createUsage()" style="margin-left: 17vw" class="btn btn-success">Create</button>
           </div>
         </form>
+      </div>
       </div>  
     </div>
     <!-- /#page-content-wrapper -->

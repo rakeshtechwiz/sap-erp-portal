@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -55,7 +62,59 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <section id="top">
+        <div *ngIf="loaded" style="width: 40vw" class="container">
+        <h3  class="text-center mt-3"><strong>Employee Profile</strong></h3>
+        <button *ngIf="editable" (click)="saveChanges()" style="margin-left: 17vw" class="btn btn-success mt-1">Save Changes</button>
+        <button *ngIf="!editable" (click)="updateProfile()" style="margin-left: 17vw" class="btn btn-warning mt-1">Update</button>
+        <form>
+          <div class="form-group">
+            <label><strong>PersonnelNumber</strong></label>
+            <input disabled type="text" id="PersonnelNumber" class="form-control" value="{{employeeProfile.PersonnelNumber}}">
+          </div>
+          <div class="form-group">
+            <label><strong>EmployeeName</strong></label>
+            <input [disabled]="!editable" type="text" id="EmployeeName" class="form-control" value="{{employeeProfile.EmployeeName}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PersonnelArea</strong></label>
+            <input [disabled]="!editable" type="text" id="PersonnelArea" class="form-control" value="{{employeeProfile.PersonnelArea}}">
+          </div>
+          <div class="form-group">
+            <label><strong>EmployeeGroup</strong></label>
+            <input [disabled]="!editable" type="text" id="EmployeeGroup" class="form-control" value="{{employeeProfile.EmployeeGroup}}">
+          </div>
+          <div class="form-group">
+            <label><strong>OrganizationalKey</strong></label>
+            <input [disabled]="!editable" type="text" id="OrganizationalKey" class="form-control" value="{{employeeProfile.OrganizationalKey}}">
+          </div>
+          <div class="form-group">
+            <label><strong>BusinessArea</strong></label>
+            <input [disabled]="!editable" type="text" id="BusinessArea" class="form-control" value="{{employeeProfile.BusinessArea}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PayrollArea</strong></label>
+            <input [disabled]="!editable" type="text" id="PayrollArea"  class="form-control" value="{{employeeProfile.PayrollArea}}">
+          </div>
+          <div class="form-group">
+            <label><strong>OrganizationalUnit</strong></label>
+            <input [disabled]="!editable" type="text" id="OrganizationalUnit" class="form-control" value="{{employeeProfile.OrganizationalUnit}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Position</strong></label>
+            <input [disabled]="!editable" type="text" id="Position" class="form-control" value="{{employeeProfile.Position}}">
+          </div>
+          <div class="form-group">
+            <label><strong>SupervisorArea</strong></label>
+            <input [disabled]="!editable" type="text" id="SupervisorArea" class="form-control" value="{{employeeProfile.SupervisorArea}}">
+          </div>
+          <div class="form-group">
+            <label><strong>CompanyCode</strong></label>
+            <input [disabled]="!editable" type="text" id="CompanyCode" class="form-control" value="{{employeeProfile.CompanyCode}}">
+          </div>
+        </form>
+      </div>
+    </section>
       </div>
       
     </div>

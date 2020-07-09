@@ -39,6 +39,10 @@ export class DataService {
   getQPInsLot(options){
     return fetch("http://localhost:8000/qp/inslot",options);
   }
+  //QP BAPI InsLot
+  getQPBInsLot(options){
+    return fetch("http://localhost:8000/qp/bapi/inslot",options);
+  }
   //QP ResRecCU
   getQPResRecCU(options){
     return fetch("http://localhost:8000/qp/resreccu",options);
@@ -59,6 +63,44 @@ export class DataService {
   //EP IMCU
   getEPIMCU(options){
     return fetch("http://localhost:8000/ep/imcu",options);
+  }
+  //Employee Portal
+  //Employee Leave
+  getEMPLeave(options){
+    return fetch("http://localhost:8000/emp/leave",options);
+  }
+  //Employee Leave CU
+  getEMPLeaveCU(options){
+    return fetch("http://localhost:8000/emp/leavecu",options);
+  }
+  //Employee Pay
+  getEMPPay(options){
+    return fetch("http://localhost:8000/emp/pay",options);
+  }
+  //Employee Profile CU
+  getEMPProfileCU(options){
+    return fetch("http://localhost:8000/emp/profilecu",options);
+  }
+  //Employee Profile 
+  getEMPProfile(options){
+    return fetch("http://localhost:8000/emp/profile",options);
+  }
+  //Maintenance Portal
+  //Notification CU
+  getMainNotificationCU(options){
+    return fetch("http://localhost:8000/main/notificationcu",options);
+  }
+  //Work CU
+  getMainWorkCU(options){
+    return fetch("http://localhost:8000/main/workcu",options);
+  }
+  //Notification
+  getMainNotification(options){
+    return fetch("http://localhost:8000/main/notification",options);
+  }
+  //Work
+  getMainWork(options){
+    return fetch("http://localhost:8000/main/work",options);
   }
   //Auth functions
   customerAuth(token){ 

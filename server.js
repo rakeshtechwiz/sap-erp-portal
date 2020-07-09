@@ -354,6 +354,85 @@ req1.write(postData);
 req1.end();
 	
 });
+//QP BAPI InsLot Route
+app.post('/qp/bapi/inslot',(req,res) => {
+	const matnr = req.body.matnr;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_InsLot&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_INSLOT>
+		  <!--You may enter the following 2 items in any order-->
+		  <MATNR>${matnr}</MATNR>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<MANDT>?</MANDT>
+				<!--Optional:-->
+				<MATNR>?</MATNR>
+				<!--Optional:-->
+				<PLANT>?</PLANT>
+				<!--Optional:-->
+				<INSTYPE>?</INSTYPE>
+				<!--Optional:-->
+				<OBJNO>?</OBJNO>
+				<!--Optional:-->
+				<OBJCAT>?</OBJCAT>
+				<!--Optional:-->
+				<DATCREATE>?</DATCREATE>
+				<!--Optional:-->
+				<TIMCREATE>?</TIMCREATE>
+				<!--Optional:-->
+				<STARTDAT>?</STARTDAT>
+				<!--Optional:-->
+				<STARTTIM>?</STARTTIM>
+				<!--Optional:-->
+				<ENDDAT>?</ENDDAT>
+				<!--Optional:-->
+				<ENDTIM>?</ENDTIM>
+				<!--Optional:-->
+				<INSLOTNO>?</INSLOTNO>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_INSLOT>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_INSLOT.Response']['ITAB']['item'];
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
 //QP InsLot Route
 app.post('/qp/inslot',(req,res) => {
 	const matnr = req.body.matnr;
@@ -703,6 +782,10 @@ app.post('/ep/ra',(req,res) => {
 			const xml = body.toString();
 			const data = parser.xml2json(xml, {compact: true, spaces: 4});
 			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_RISKA.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
 			res.send(resp);
 		});
 
@@ -791,6 +874,653 @@ app.post('/ep/imcu',(req,res) => {
 req1.write(postData);
 
 req1.end();
+	
+});
+//Employee routes
+//Employee leave route
+app.post('/emp/leave',(req,res) => {
+	let pernr = req.body.pernr;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Leave&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_LEAVE>
+		  <!--You may enter the following 2 items in any order-->
+		  <PERNR>${pernr}</PERNR>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<REFNR>?</REFNR>
+				<!--Optional:-->
+				<PERNR>?</PERNR>
+				<!--Optional:-->
+				<BEGDA>?</BEGDA>
+				<!--Optional:-->
+				<ENDDA>?</ENDDA>
+				<!--Optional:-->
+				<BEGUZ>?</BEGUZ>
+				<!--Optional:-->
+				<ENDUZ>?</ENDUZ>
+				<!--Optional:-->
+				<AWART>?</AWART>
+				<!--Optional:-->
+				<ABWTG>?</ABWTG>
+				<!--Optional:-->
+				<STDAZ>?</STDAZ>
+				<!--Optional:-->
+				<PLANS>?</PLANS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_LEAVE>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_LEAVE.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Employee Leave CU
+app.post('/emp/leavecu',(req,res) => {
+	const PersonnelNumber = req.body.PersonnelNumber;
+	const EndDate = req.body.EndDate;
+	const StartDate = req.body.StartDate;
+	const StartTime = req.body.StartTime;
+	const EndTime = req.body.EndTime;
+	const AttendanceOrAbsenceType = req.body.AttendanceOrAbsenceType;
+	const AttendanceAndAbsenceDays = req.body.AttendanceAndAbsenceDays;
+	const AbsenceHours = req.body.AbsenceHours;
+	const ReferenceNumber = req.body.ReferenceNumber;
+	const Position = req.body.Position;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_LeaveCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_LeaveCU_Req>
+		  <PersonnelNumber>${PersonnelNumber}</PersonnelNumber>
+		  <EndDate>${EndDate}</EndDate>
+		  <StartDate>${StartDate}</StartDate>
+		  <StartTime>${StartTime}</StartTime>
+		  <EndTime>${EndTime}</EndTime>
+		  <AttendanceOrAbsenceType>${AttendanceOrAbsenceType}</AttendanceOrAbsenceType>
+		  <AttendanceAndAbsenceDays>${AttendanceAndAbsenceDays}</AttendanceAndAbsenceDays>
+		  <AbsenceHours>${AbsenceHours}</AbsenceHours>
+		  <ReferenceNumber>${ReferenceNumber}</ReferenceNumber>
+		  <Position>${Position}</Position>
+	   </rak:MT_SRK_LeaveCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_LeaveCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Employee Pay
+app.post('/emp/pay',(req,res) => {
+	const PersonnelNumber = req.body.PersonnelNumber;
+	const Month = req.body.Month;
+	const Year = req.body.Year;
+	// console.log(matnr);
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Pay_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Pay_Req>
+		  <PersonnelNumber>${PersonnelNumber}</PersonnelNumber>
+		  <Month>${Month}</Month>
+		  <Year>${Year}</Year>
+	   </rak:MT_SRK_Pay_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Pay_Resp'];
+		// console.log(resp);
+		res.send({
+			PersonnelNumber: resp['PersonnelNumber']['_text'],
+			Month: resp['Month']['_text'],
+			Year: resp['Year']['_text'],
+			PayScaleType: resp['PayScaleType']['_text'],
+			PayScaleArea: resp['PayScaleArea']['_text'],
+			PayScaleGroup: resp['PayScaleGroup']['_text'],
+			PayScaleLevel: resp['PayScaleLevel']['_text'],
+			DateofNextIncrease: resp['DateofNextIncrease']['_text'],
+			WorkingHoursPerPayrollPeriod: resp['WorkingHoursPerPayrollPeriod']['_text'],
+			AnnualSalary: resp['AnnualSalary']['_text'],
+			WageType: resp['WageType']['_text']
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Employee Profile CU
+app.post('/emp/profilecu',(req,res) => {
+	const PersonnelNumber = req.body.PersonnelNumber;
+	const PersonnelArea = req.body.PersonnelArea;
+	const EmployeeGroup = req.body.EmployeeGroup;
+	const OrganizationalKey = req.body.OrganizationalKey;
+	const BusinessArea = req.body.BusinessArea;
+	const PayrollArea = req.body.PayrollArea;
+	const OrganizationalUnit = req.body.OrganizationalUnit;
+	const Position = req.body.Position;
+	const SupervisorArea = req.body.SupervisorArea;
+	const EmployeeName = req.body.EmployeeName;
+	const CompanyCode = req.body.CompanyCode;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_ProfileCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_ProfileCU_Req>
+		  <PersonnelNumber>${PersonnelNumber}</PersonnelNumber>
+		  <PersonnelArea>${PersonnelArea}</PersonnelArea>
+		  <EmployeeGroup>${EmployeeGroup}</EmployeeGroup>
+		  <OrganizationalKey>${OrganizationalKey}</OrganizationalKey>
+		  <BusinessArea>${BusinessArea}</BusinessArea>
+		  <PayrollArea>${PayrollArea}</PayrollArea>
+		  <OrganizationalUnit>${OrganizationalUnit}</OrganizationalUnit>
+		  <Position>${Position}</Position>
+		  <SupervisorArea>${SupervisorArea}</SupervisorArea>
+		  <EmployeeName>${EmployeeName}</EmployeeName>
+		  <CompanyCode>${CompanyCode}</CompanyCode>
+	   </rak:MT_SRK_ProfileCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_ProfileCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Employee Profile
+app.post('/emp/profile',(req,res) => {
+	const PersonnelNumber = req.body.PersonnelNumber;
+	// console.log(matnr);
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Profile_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Profile_Req>
+		  <PersonnelNumber>${PersonnelNumber}</PersonnelNumber>
+	   </rak:MT_SRK_Profile_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Profile_Resp'];
+		// console.log(resp);
+		res.send({
+			PersonnelNumber: resp['PersonnelNumber']['_text'],
+			PersonnelArea: resp['PersonnelArea']['_text'],
+			EmployeeGroup: resp['EmployeeGroup']['_text'],
+			OrganizationalKey: resp['OrganizationalKey']['_text'],
+			BusinessArea: resp['BusinessArea']['_text'],
+			PayrollArea: resp['PayrollArea']['_text'],
+			OrganizationalUnit: resp['OrganizationalUnit']['_text'],
+			Position: resp['Position']['_text'],
+			SupervisorArea: resp['SupervisorArea']['_text'],
+			EmployeeName: resp['EmployeeName']['_text'],
+			CompanyCode: resp['CompanyCode']['_text']
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+// Maintenance portal
+//Notification CU
+app.post('/main/notificationcu',(req,res) => {
+	const NotificationNo = req.body.NotificationNo;
+	const PriorityType = req.body.PriorityType;
+	const Priority = req.body.Priority;
+	const TimeofNotification = req.body.TimeofNotification;
+	const DateofNotification = req.body.DateofNotification;
+	const NameofPersonReportingNotification = req.body.NameofPersonReportingNotification;
+	const OrderNumber = req.body.OrderNumber;
+	const MaterialNo = req.body.MaterialNo;
+	const DateforNotificationCompletion = req.body.DateforNotificationCompletion;
+	const InspectionLotNumber = req.body.InspectionLotNumber;
+	const BatchNumber = req.body.BatchNumber;
+	const PurchasingOrganization = req.body.PurchasingOrganization;
+	const NameofPersonReponsibleforSystem = req.body.NameofPersonReponsibleforSystem;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Main_Notif_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Main_Notif_Req>
+		  <NotificationNo>${NotificationNo}</NotificationNo>
+		  <PriorityType>${PriorityType}</PriorityType>
+		  <Priority>${Priority}</Priority>
+		  <TimeofNotification>${TimeofNotification}</TimeofNotification>
+		  <DateofNotification>${DateofNotification}</DateofNotification>
+		  <NameofPersonReportingNotification>${NameofPersonReportingNotification}</NameofPersonReportingNotification>
+		  <OrderNumber>${OrderNumber}</OrderNumber>
+		  <MaterialNo>${MaterialNo}</MaterialNo>
+		  <DateforNotificationCompletion>${DateforNotificationCompletion}</DateforNotificationCompletion>
+		  <InspectionLotNumber>${InspectionLotNumber}</InspectionLotNumber>
+		  <BatchNumber>${BatchNumber}</BatchNumber>
+		  <PurchasingOrganization>${PurchasingOrganization}</PurchasingOrganization>
+		  <NameofPersonReponsibleforSystem>${NameofPersonReponsibleforSystem}</NameofPersonReponsibleforSystem>
+	   </rak:MT_SRK_Main_Notif_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Main_Notif_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Work CU
+app.post('/main/workcu',(req,res) => {
+	const OrderNumber = req.body.OrderNumber;
+	const PriorityType = req.body.PriorityType;
+	const Priority = req.body.Priority;
+	const EquipmentNumber = req.body.EquipmentNumber;
+	const ObjectID = req.body.ObjectID;
+	const NameofPersonReponsibleforSystem = req.body.NameofPersonReponsibleforSystem;
+	const PlannedDowntimeinHours = req.body.PlannedDowntimeinHours;
+	const DateFromWhichTheSystemIsAvailable = req.body.DateFromWhichTheSystemIsAvailable;
+	const MaintenancePlan = req.body.MaintenancePlan;
+	const MaintenanceItem = req.body.MaintenanceItem;
+	const NotificationNo = req.body.NotificationNo;
+	
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Main_WorkCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Main_WorkCU_Req>
+		  <OrderNumber>${OrderNumber}</OrderNumber>
+		  <PriorityType>${PriorityType}</PriorityType>
+		  <Priority>${Priority}</Priority>
+		  <EquipmentNumber>${EquipmentNumber}</EquipmentNumber>
+		  <ObjectID>${ObjectID}</ObjectID>
+		  <NameofPersonReponsibleforSystem>${NameofPersonReponsibleforSystem}</NameofPersonReponsibleforSystem>
+		  <PlannedDowntimeinHours>${PlannedDowntimeinHours}</PlannedDowntimeinHours>
+		  <DateFromWhichTheSystemIsAvailable>${DateFromWhichTheSystemIsAvailable}</DateFromWhichTheSystemIsAvailable>
+		  <MaintenancePlan>${MaintenancePlan}</MaintenancePlan>
+		  <MaintenanceItem>${MaintenanceItem}</MaintenanceItem>
+		  <NotificationNo>${NotificationNo}</NotificationNo>
+	   </rak:MT_SRK_Main_WorkCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Main_WorkCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Notification
+app.post('/main/notification',(req,res) => {
+	
+	let ANING = req.body.ANING;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Main_Not&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_NOTIF>
+		  <!--You may enter the following 2 items in any order-->
+		  <ANING>${ANING}</ANING>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<QMNUM>?</QMNUM>
+				<!--Optional:-->
+				<ARTPR>?</ARTPR>
+				<!--Optional:-->
+				<PRIOK>?</PRIOK>
+				<!--Optional:-->
+				<MZEIT>?</MZEIT>
+				<!--Optional:-->
+				<QMDAT>?</QMDAT>
+				<!--Optional:-->
+				<QMNAM>?</QMNAM>
+				<!--Optional:-->
+				<AUFNR>?</AUFNR>
+				<!--Optional:-->
+				<MATNR>?</MATNR>
+				<!--Optional:-->
+				<QMDAB>?</QMDAB>
+				<!--Optional:-->
+				<PRUEFLOS>?</PRUEFLOS>
+				<!--Optional:-->
+				<CHARG>?</CHARG>
+				<!--Optional:-->
+				<EKORG>?</EKORG>
+				<!--Optional:-->
+				<ANING>?</ANING>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_NOTIF>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_NOTIF.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Work
+app.post('/main/work',(req,res) => {
+	let ANING = req.body.ANING;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Main_Work&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_WORK>
+		  <!--You may enter the following 2 items in any order-->
+		  <ANING>${ANING}</ANING>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<QMNUM>?</QMNUM>
+				<!--Optional:-->
+				<AUFNR>?</AUFNR>
+				<!--Optional:-->
+				<ARTPR>?</ARTPR>
+				<!--Optional:-->
+				<PRIOK>?</PRIOK>
+				<!--Optional:-->
+				<EQUNR>?</EQUNR>
+				<!--Optional:-->
+				<GEWRK>?</GEWRK>
+				<!--Optional:-->
+				<ANING>?</ANING>
+				<!--Optional:-->
+				<GAUZT>?</GAUZT>
+				<!--Optional:-->
+				<ANLVD>?</ANLVD>
+				<!--Optional:-->
+				<WARPL>?</WARPL>
+				<!--Optional:-->
+				<WAPOS>?</WAPOS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_WORK>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_WORK.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
 	
 });
 //Test wsdl

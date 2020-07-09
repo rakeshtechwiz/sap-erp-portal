@@ -10,12 +10,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./quality-dashboard.component.css']
 })
 export class QualityDashboardComponent implements OnInit {
+  temp : any;
   show = false;
+  insShow = true;
   tableShow = false;
   recordShow = false;
   useShow = false;
   logout: Function;
-  insLotArray = [];
+  insLotArray : any;
   constructor(private router:Router,private data:DataService , private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -25,6 +27,7 @@ export class QualityDashboardComponent implements OnInit {
       this.router.navigate(['qualitylogin']);
     }
     this.data.qualityAuth(token);
+    this.viewTable();
     this.logout = () => {
       
       const swalWithBootstrapButtons = swal.mixin({
@@ -76,7 +79,7 @@ export class QualityDashboardComponent implements OnInit {
   viewTable(){
     this.spinner.show();
     const myHeaders = new Headers();
-    let matnr = (document.getElementById("matnr") as HTMLInputElement).value;
+    let matnr = 1;
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify({"matnr" : matnr});
       const options = {
@@ -85,9 +88,9 @@ export class QualityDashboardComponent implements OnInit {
         body: raw,
         redirect: 'follow'
       };
-    this.data.getQPInsLot(options).then((response) => {
+    this.data.getQPBInsLot(options).then((response) => {
       response.json().then((res) => {
-        this.insLotArray.push(res);
+        this.insLotArray = res;
         this.spinner.hide();
         this.tableShow = true;
       })
@@ -102,7 +105,7 @@ export class QualityDashboardComponent implements OnInit {
   createRecord(){
     this.spinner.show();
     const myHeaders = new Headers();
-    let InspectionLotNo = (document.getElementById("InspectionLotNo") as HTMLInputElement).value;
+    let InspectionLotNo = this.temp;
     let InspectionCharNo = (document.getElementById("InspectionCharNo") as HTMLInputElement).value;
     let ResultAttribute = (document.getElementById("ResultAttribute") as HTMLInputElement).value;
     let InspectorName = (document.getElementById("InspectorName") as HTMLInputElement).value;
@@ -135,9 +138,8 @@ export class QualityDashboardComponent implements OnInit {
       response.json().then((res) => {
         
         if(res.status == "Success"){
-          (document.getElementById("InspectionLotNo") as HTMLInputElement).value = "";
           this.spinner.hide();
-          this.recordShow = false;
+          this.backtoil();
           swal.fire({
             position: 'center',
             icon: 'success',
@@ -157,7 +159,7 @@ export class QualityDashboardComponent implements OnInit {
   createUsage(){
     this.spinner.show();
     const myHeaders = new Headers();
-    let InspectionLotNo = (document.getElementById("InspectionLotNoUD") as HTMLInputElement).value;
+    let InspectionLotNo = this.temp;
     let Date = (document.getElementById("Date") as HTMLInputElement).value;
     let Counter = (document.getElementById("Counter") as HTMLInputElement).value;
     let Plant = (document.getElementById("Plant") as HTMLInputElement).value;
@@ -192,9 +194,9 @@ export class QualityDashboardComponent implements OnInit {
       response.json().then((res) => {
         
         if(res.status == "Success"){
-          (document.getElementById("InspectionLotNoUD") as HTMLInputElement).value = "";
+          
           this.spinner.hide();
-          this.useShow = false;
+          this.backtoil();
           swal.fire({
             position: 'center',
             icon: 'success',
@@ -211,8 +213,24 @@ export class QualityDashboardComponent implements OnInit {
       })
     })
   }
-  clickCheck(i){
-    alert("Works!"+" "+i);
+  recordForm(insLotNo)
+  {
+    this.temp = insLotNo;
+    this.insShow = false;
+    this.tableShow = false;
+    this.recordShow = true;
+  }
+  usageForm(insLotNo){
+    this.temp = insLotNo;
+    this.insShow = false;
+    this.tableShow = false;
+    this.useShow = true;
+  }
+  backtoil(){
+    this.recordShow = false;
+    this.useShow = false;
+    this.insShow = true;
+    this.tableShow = true;
   }
 
 

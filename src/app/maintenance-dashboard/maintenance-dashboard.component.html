@@ -53,7 +53,299 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <button *ngIf="nocshow || noeshow || wocshow || woeshow" (click)="backtohis()" style="margin-left: 36vw" class="btn btn-danger mt-3 ">Back to History </button>
+        <h2 *ngIf="noshow" class="text-center mt-3"><strong>Notification History</strong></h2>
+        <button *ngIf="noshow" (click)="viewnocshow()" class="btn btn-success mb-2 d-inline"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Notification</button>
+        <div *ngIf="noshow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>NotificationNo</th>
+              <th>PriorityType</th>
+              <th>Priority</th>
+              <th>TimeofNotification</th>
+              <th>DateofNotification</th>
+              <th>NameofPersonReportingNotification</th>
+              <th>OrderNumber</th>
+              <th>MaterialNo</th>
+              <th>DateforNotificationCompletion</th>
+              <th>InspectionLotNumber</th>
+              <th>BatchNumber</th>
+              <th>PurchasingOrganization</th>
+              <th>NameofPersonReponsibleforSystem</th>
+            </thead>
+            <tbody *ngFor="let notification of notificationArray; index as i">
+              <tr align="center">
+                <td><button (click)="viewnoeshow(i)" class="btn btn-warning btn-sm">Edit</button></td>
+                <td>{{notification.QMNUM._text}}</td>
+                <td>{{notification.ARTPR._text}}</td>
+                <td>{{notification.PRIOK._text}}</td>
+                <td>{{notification.MZEIT._text}}</td>
+                <td>{{notification.QMDAT._text}}</td>
+                <td>{{notification.QMNAM._text}}</td>
+                <td>{{notification.AUFNR._text}}</td>
+                <td>{{notification.MATNR._text}}</td>
+                <td>{{notification.QMDAB._text}}</td>
+                <td>{{notification.PRUEFLOS._text}}</td>
+                <td>{{notification.CHARG._text}}</td>
+                <td>{{notification.EKORG._text}}</td>
+                <td>{{notification.ANING._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h2 *ngIf="woshow" class="text-center mt-3"><strong>Work Order History</strong></h2>
+        <button *ngIf="woshow" (click)="viewwocshow()" class="btn btn-success mb-2 d-inline"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Work Order</button>
+        <div *ngIf="woshow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>OrderNumber</th>
+              <th>PriorityType</th>
+              <th>Priority</th>
+              <th>EquipmentNumber</th>
+              <th>ObjectID</th>
+              <th>NameofPersonReponsibleforSystem</th>
+              <th>PlannedDowntimeInHours</th>
+              <th>DateFromWhichTheSystemIsAvailable</th>
+              <th>MaintenancePlan</th>
+              <th>MaintenanceItem</th>
+              <th>NotificationNo</th>
+            </thead>
+            <tbody *ngFor="let work of workArray; index as i">
+              <tr align="center">
+                <td><button (click)="viewwoeshow(i)" class="btn btn-warning btn-sm">Edit</button></td>
+                <td>{{work.AUFNR._text}}</td>
+                <td>{{work.ARTPR._text}}</td>
+                <td>{{work.PRIOK._text}}</td>
+                <td>{{work.EQUNR._text}}</td>
+                <td>{{work.GEWRK._text}}</td>
+                <td>{{work.ANING._text}}</td>
+                <td>{{work.GAUZT._text}}</td>
+                <td>{{work.ANLVD._text}}</td>
+                <td>{{work.WARPL._text}}</td>
+                <td>{{work.WAPOS._text}}</td>
+                <td>{{work.QMNUM._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="wocshow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Create Work Order</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>OrderNumber</strong></label>
+            <input type="text" id="WOrderNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PriorityType</strong></label>
+            <input type="text" id="WPriorityType" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Priority</strong></label>
+            <input type="text" id="WPriority" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>EquipmentNumber</strong></label>
+            <input type="text" id="WEquipmentNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>ObjectID</strong></label>
+            <input type="text" id="WObjectID" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReponsibleforSystem</strong></label>
+            <input type="text" id="WNameofPersonReponsibleforSystem" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PlannedDowntimeinHours</strong></label>
+            <input type="text" id="WPlannedDowntimeinHours"  class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>DateFromWhichTheSystemIsAvailable</strong></label>
+            <input type="text" id="WDateFromWhichTheSystemIsAvailable" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>MaintenancePlan</strong></label>
+            <input type="text" id="WMaintenancePlan" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>MaintenanceItem</strong></label>
+            <input type="text" id="WMaintenanceItem" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>NotificationNo</strong></label>
+            <input type="text" id="WNotificationNo" class="form-control">
+          </div>
+          <button (click)="createWO()" style="margin-left: 17vw" class="btn btn-success mt-3">Create</button>
+        </form>
+        </div>
+        <div *ngIf="nocshow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Create Notification</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>NotificationNo</strong></label>
+            <input type="text" id="NotificationNo" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PriorityType</strong></label>
+            <input type="text" id="PriorityType" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Priority</strong></label>
+            <input type="text" id="Priority" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>TimeofNotification</strong></label>
+            <input type="text" id="TimeofNotification" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>DateofNotification</strong></label>
+            <input type="text" id="DateofNotification" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReportingNotification</strong></label>
+            <input type="text" id="NameofPersonReportingNotification" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>OrderNumber</strong></label>
+            <input type="text" id="OrderNumber"  class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>MaterialNo</strong></label>
+            <input type="text" id="MaterialNo" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>DateforNotificationCompletion</strong></label>
+            <input type="text" id="DateforNotificationCompletion" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>InspectionLotNumber</strong></label>
+            <input type="text" id="InspectionLotNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>BatchNumber</strong></label>
+            <input type="text" id="BatchNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>PurchasingOrganization</strong></label>
+            <input type="text" id="PurchasingOrganization" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReponsibleforSystem</strong></label>
+            <input type="text" id="NameofPersonReponsibleforSystem" class="form-control">
+          </div>
+          <button (click)="createNO()" style="margin-left: 17vw" class="btn btn-success mt-3">Create</button>
+        </form>
+        </div>
+        <div *ngIf="noeshow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Edit Notification</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>NotificationNo</strong></label>
+            <input type="text" disabled="true" id="eNotificationNo" class="form-control" value="{{notificationArray[editIndex].QMNUM._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PriorityType</strong></label>
+            <input type="text" id="ePriorityType" class="form-control" value="{{notificationArray[editIndex].ARTPR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Priority</strong></label>
+            <input type="text" id="ePriority" class="form-control" value="{{notificationArray[editIndex].PRIOK._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>TimeofNotification</strong></label>
+            <input type="text" id="eTimeofNotification" class="form-control" value="{{notificationArray[editIndex].MZEIT._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>DateofNotification</strong></label>
+            <input type="text" id="eDateofNotification" class="form-control" value="{{notificationArray[editIndex].QMDAT._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReportingNotification</strong></label>
+            <input type="text" id="eNameofPersonReportingNotification" class="form-control" value="{{notificationArray[editIndex].QMNAM._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>OrderNumber</strong></label>
+            <input type="text" id="eOrderNumber"  class="form-control" value="{{notificationArray[editIndex].AUFNR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>MaterialNo</strong></label>
+            <input type="text" id="eMaterialNo" class="form-control" value="{{notificationArray[editIndex].MATNR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>DateforNotificationCompletion</strong></label>
+            <input type="text" id="eDateforNotificationCompletion" class="form-control" value="{{notificationArray[editIndex].QMDAB._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>InspectionLotNumber</strong></label>
+            <input type="text" id="eInspectionLotNumber" class="form-control" value="{{notificationArray[editIndex].PRUEFLOS._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>BatchNumber</strong></label>
+            <input type="text" id="eBatchNumber" class="form-control" value="{{notificationArray[editIndex].CHARG._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PurchasingOrganization</strong></label>
+            <input type="text" id="ePurchasingOrganization" class="form-control" value="{{notificationArray[editIndex].EKORG._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReponsibleforSystem</strong></label>
+            <input type="text" id="eNameofPersonReponsibleforSystem" class="form-control" value="{{notificationArray[editIndex].ANING._text}}">
+          </div>
+          <button (click)="updateNO()" style="margin-left: 17vw" class="btn btn-success mt-3">Update</button>
+        </form>
+        </div>
+        <div *ngIf="woeshow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Edit Work Order</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>OrderNumber</strong></label>
+            <input type="text" disabled="true" id="WeOrderNumber" class="form-control" value="{{workArray[editIndex].AUFNR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PriorityType</strong></label>
+            <input type="text" id="WePriorityType" class="form-control" value="{{workArray[editIndex].ARTPR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>Priority</strong></label>
+            <input type="text" id="WePriority" class="form-control" value="{{workArray[editIndex].PRIOK._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>EquipmentNumber</strong></label>
+            <input type="text" id="WeEquipmentNumber" class="form-control" value="{{workArray[editIndex].EQUNR._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>ObjectID</strong></label>
+            <input type="text" id="WeObjectID" class="form-control" value="{{workArray[editIndex].GEWRK._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>NameofPersonReponsibleforSystem</strong></label>
+            <input type="text" id="WeNameofPersonReponsibleforSystem" class="form-control" value="{{workArray[editIndex].ANING._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>PlannedDowntimeinHours</strong></label>
+            <input type="text" id="WePlannedDowntimeinHours"  class="form-control" value="{{workArray[editIndex].GAUZT._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>DateFromWhichTheSystemIsAvailable</strong></label>
+            <input type="text" id="WeDateFromWhichTheSystemIsAvailable" class="form-control" value="{{workArray[editIndex].ANLVD._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>MaintenancePlan</strong></label>
+            <input type="text" id="WeMaintenancePlan" class="form-control" value="{{workArray[editIndex].WARPL._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>MaintenanceItem</strong></label>
+            <input type="text" id="WeMaintenanceItem" class="form-control" value="{{workArray[editIndex].WAPOS._text}}">
+          </div>
+          <div class="form-group">
+            <label><strong>NotificationNo</strong></label>
+            <input type="text" id="WeNotificationNo" class="form-control" value="{{workArray[editIndex].QMNUM._text}}">
+          </div>
+          <button (click)="updateWO()" style="margin-left: 17vw" class="btn btn-success mt-3">Update</button>
+        </form>
+        </div>
       </div>
       
     </div>

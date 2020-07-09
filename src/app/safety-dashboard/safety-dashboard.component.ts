@@ -103,11 +103,24 @@ export class SafetyDashboardComponent implements OnInit {
         redirect: 'follow'
       };
       this.data.getEPRA(options).then((response) => {
+      
         response.json().then((res) => {
-         this.riskArray = res;
-         this.imshow = false;
-         this.rashow = true;
-         this.spinner.hide();
+         if(res.null == "null")
+         {
+           this.spinner.hide();
+              swal.fire(
+              'No Risk Assessments Available',
+              '',
+              'info'
+            );
+         }
+         else{
+          this.riskArray = res;
+          this.imshow = false;
+          this.rashow = true;
+          this.spinner.hide();
+         }
+         
         })
       })
   }

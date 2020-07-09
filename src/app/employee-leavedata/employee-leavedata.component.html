@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -55,7 +62,85 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h2 *ngIf="hisshow" class="text-center mt-3"><strong>Leave History</strong></h2>
+        <button *ngIf="hisshow" (click)="showForm()" class="btn btn-success mb-2 d-inline"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Apply Leave</button>
+        <div *ngIf="hisshow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>ReferenceNumber</th>
+              <th>PersonnelNumber</th>
+              <th>StartDate</th>
+              <th>EndDate</th>
+              <th>StartTime</th>
+              <th>EndTime</th>
+              <th>AttendanceorAbsenceType</th>
+              <th>AttendanceandAbsenceDays</th>
+              <th>Absencehours</th>
+              <th>Position</th>
+            </thead>
+            <tbody *ngFor="let leave of leaveArray">
+              <tr align="center">
+                <td>{{leave.REFNR._text}}</td>
+                <td>{{leave.PERNR._text}}</td>
+                <td>{{leave.BEGDA._text}}</td>
+                <td>{{leave.ENDDA._text}}</td>
+                <td>{{leave.BEGUZ._text}}</td>
+                <td>{{leave.ENDUZ._text}}</td>
+                <td>{{leave.AWART._text}}</td>
+                <td>{{leave.ABWTG._text}}</td>
+                <td>{{leave.STDAZ._text}}</td>
+                <td>{{leave.PLANS._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button *ngIf="applyShow" (click)="backtohistory()" style="margin-left: 36vw" class="btn btn-danger mt-3 ">Back to Leave History </button>
+        <div *ngIf="applyShow" style="width: 40vw" class="container">
+          <h3  class="text-center mt-3"><strong>Apply Leave</strong></h3>
+        <form>
+          <div class="form-group">
+            <label><strong>PersonnelNumber</strong></label>
+            <input disabled type="text"  id="PersonnelNumber" class="form-control" value="001">
+          </div>
+          <div class="form-group">
+            <label><strong>StartDate</strong></label>
+            <input type="text" id="StartDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>EndDate</strong></label>
+            <input type="text" id="EndDate" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>StartTime</strong></label>
+            <input type="text" id="StartTime" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>EndTime</strong></label>
+            <input type="text" id="EndTime" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>AttendanceOrAbsenceType</strong></label>
+            <input type="text" id="AttendanceOrAbsenceType" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>AttendanceAndAbsenceDays</strong></label>
+            <input type="text" id="AttendanceAndAbsenceDays"  class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>AbsenceHours</strong></label>
+            <input type="text" id="AbsenceHours" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>ReferenceNumber</strong></label>
+            <input type="text" id="ReferenceNumber" class="form-control">
+          </div>
+          <div class="form-group">
+            <label><strong>Position</strong></label>
+            <input type="text" id="Position" class="form-control">
+          </div>
+          <button (click)="applyLeave()" style="margin-left: 17vw" class="btn btn-success mt-3">Apply</button>
+        </form>
+        </div>
       </div>
       
     </div>

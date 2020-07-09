@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -55,7 +62,46 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h4 class="mt-3 text-center"><strong>Salary PaySlip</strong></h4>
+        <form>
+          <div class="form-label-group d-flex align-center mb-3 mt-3">
+            <input type="text"  style="width:25vw;" id="Month" placeholder="Month (In Number)" class="form-control">
+            <input type="text"  style="width:25vw;" id="Year" placeholder="Year" class="form-control ml-4">
+            <button (click)="viewPay()"  class="btn btn-primary ml-3">View</button>
+          </div>  
+        </form>
+        <div *ngIf="tableShow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>PersonnelNumber</th>
+              <th>Month</th>
+              <th>Year</th>
+              <th>PayScaleType</th>
+              <th>PayScaleArea</th>
+              <th>PayScaleGroup</th>
+              <th>PayScaleLevel</th>
+              <th>DateofNextIncrease</th>
+              <th>WorkingHoursPerPayrollPeriod</th>
+              <th>AnnualSalary</th>
+              <th>WageType</th>
+            </thead>
+            <tbody>
+              <tr align="center">
+                <td>{{pay.PersonnelNumber}}</td>
+                <td>{{pay.Month}}</td>
+                <td>{{pay.Year}}</td>
+                <td>{{pay.PayScaleType}}</td>
+                <td>{{pay.PayScaleArea}}</td>
+                <td>{{pay.PayScaleGroup}}</td>
+                <td>{{pay.PayScaleLevel}}</td>
+                <td>{{pay.DateofNextIncrease}}</td>
+                <td>{{pay.WorkingHoursPerPayrollPeriod}}</td>
+                <td>{{pay.AnnualSalary}}</td>
+                <td>{{pay.WageType}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       
     </div>
