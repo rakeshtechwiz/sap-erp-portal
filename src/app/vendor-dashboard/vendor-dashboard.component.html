@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -55,7 +62,115 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h4 class="mt-3 text-center"><strong>Quotation Details</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>QUOTATIONNO</th>
+              <th>VENDORNO</th>
+              <th>SALESORGANIZATION</th>
+              <th>QUOTATIONTYPE</th>
+              <th>INQUIRYNO</th>
+              <th>SOLDTOPARTY</th>
+              <th>SHIPTOPARTY</th>
+              <th>MATERIALNO</th>
+              <th>QUANTITY</th>
+              <th>TOTALPRICE</th>
+              <th>DESCRIPTION</th>
+            </thead>
+            <tbody *ngFor="let qd of qdArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{qd.QUOTATIONNO._text}}</td>
+                <td>{{qd.VENDORNO._text}}</td>
+                <td>{{qd.SALESORGANIZATION._text}}</td>
+                <td>{{qd.QUOTATIONTYPE._text}}</td>
+                <td>{{qd.INQUIRYNO._text}}</td>
+                <td>{{qd.SOLDTOPARTY._text}}</td>
+                <td>{{qd.SHIPTOPARTY._text}}</td>
+                <td>{{qd.MATERIALNO._text}}</td>
+                <td>{{qd.QUANTITY._text}}</td>
+                <td>{{qd.TOTALPRICE._text}}</td>
+                <td>{{qd.DESCRIPTION._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Purchase Order</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>PONUMBER</th>
+              <th>VENDORNO</th>
+              <th>ADDRESS</th>
+              <th>PHONE</th>
+              <th>PURCHASINGORGANIZATION</th>
+              <th>COMPANYCODE</th>
+              <th>QUOTATIONNO</th>
+              <th>MATERIALNO</th>
+              <th>QUANTITY</th>
+              <th>DELIVERYDATE</th>
+              <th>NETPRICE</th>
+              <th>POTYPE</th>
+              <th>STATUS</th>
+            </thead>
+            <tbody *ngFor="let po of poArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{po.PONUMBER._text}}</td>
+                <td>{{po.VENDORNO._text}}</td>
+                <td>{{po.ADDRESS._text}}</td>
+                <td>{{po.PHONE._text}}</td>
+                <td>{{po.PURCHASINGORGANIZATION._text}}</td>
+                <td>{{po.COMPANYCODE._text}}</td>
+                <td>{{po.QUOTATIONNO._text}}</td>
+                <td>{{po.MATERIALNO._text}}</td>
+                <td>{{po.QUANTITY._text}}</td>
+                <td>{{po.DELIVERYDATE._text}}</td>
+                <td>{{po.NETPRICE._text}}</td>
+                <td>{{po.POTYPE._text}}</td>
+                <td>{{po.STATUS._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Goods Receipt Details</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>GOODSRECEIPTNO</th>
+              <th>VENDORNO</th>
+              <th>PONUMBER</th>
+              <th>DATE</th>
+              <th>BILLTOPARTY</th>
+              <th>MATERIALNO</th>
+              <th>QUANTITY</th>
+              <th>PLANTID</th>
+              <th>GOODSRECIPIENT</th>
+              <th>NETPRICE</th>
+              <th>PURCHASINGORGANIZATION</th>
+            </thead>
+            <tbody *ngFor="let gr of grArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{gr.GOODSRECEIPTNO._text}}</td>
+                <td>{{gr.VENDORNO._text}}</td>
+                <td>{{gr.PONUMBER._text}}</td>
+                <td>{{gr.ZDATE._text}}</td>
+                <td>{{gr.BILLTOPARTY._text}}</td>
+                <td>{{gr.MATERIALNO._text}}</td>
+                <td>{{gr.QUANTITY._text}}</td>
+                <td>{{gr.PLANTID._text}}</td>
+                <td>{{gr.GOODSRECIPIENT._text}}</td>
+                <td>{{gr.NETPRICE._text}}</td>
+                <td>{{gr.PURCHASINGORGANIZATION._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       
     </div>

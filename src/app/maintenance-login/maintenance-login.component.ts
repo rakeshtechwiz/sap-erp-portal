@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-maintenance-login',
@@ -10,7 +11,7 @@ import swal from 'sweetalert2';
 })
 export class MaintenanceLoginComponent implements OnInit {
   onClick : Function;
-  constructor(private data: DataService , private router: Router) { }
+  constructor(private data: DataService , private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.onClick = () => {
@@ -20,6 +21,7 @@ export class MaintenanceLoginComponent implements OnInit {
         swal.fire('Unable to sign in', 'Fill in the required fields' , 'error');
       }
       else{
+        this.spinner.show();
         const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       const raw = JSON.stringify([{ "name" : name , "password" : pass}]);
@@ -39,6 +41,7 @@ export class MaintenanceLoginComponent implements OnInit {
           }
           else{
             localStorage.setItem("secret",res.accessToken);
+            this.spinner.hide();
             this.router.navigate(['maintenancelogin/maintenancedashboard']);
           }
   

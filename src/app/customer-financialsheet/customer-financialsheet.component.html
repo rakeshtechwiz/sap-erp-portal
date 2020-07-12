@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -55,7 +62,148 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h4 class="mt-3 text-center"><strong>Invoice Details</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>INVOICENUMBER</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>QUANTITY</th>
+              <th>TOTALAMOUNT</th>
+              <th>TAX</th>
+              <th>INVOICEDATE</th>
+              <th>DELIVERYORDERNO</th>
+              <th>SALESORDERNO</th>
+              <th>COMPANYNAME</th>
+              <th>ITEM</th>
+              <th>UNITPRICE</th>
+              <th>MATERIALNO</th>
+              <th>SHIPTOADDRESS</th>
+            </thead>
+            <tbody *ngFor="let inv of invArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{inv.INVOICENUMBER._text}}</td>
+                <td>{{inv.CUSTOMERNUMBER._text}}</td>
+                <td>{{inv.QUANTITY._text}}</td>
+                <td>{{inv.TOTALAMOUNT._text}}</td>
+                <td>{{inv.TAX._text}}</td>
+                <td>{{inv.INVOICEDATE._text}}</td>
+                <td>{{inv.DELIVERYORDERNO._text}}</td>
+                <td>{{inv.SALESORDERNO._text}}</td>
+                <td>{{inv.COMPANYNAME._text}}</td>
+                <td>{{inv.ITEM._text}}</td>
+                <td>{{inv.UNITPRICE._text}}</td>
+                <td>{{inv.MATERIALNO._text}}</td>
+                <td>{{inv.SHIPTOADDRESS._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Payments and Aging</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>INVOICENO</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>AGINGDATE</th>
+              <th>GRANDTOTAL</th>
+              <th>CURRENCYTYPE</th>
+              <th>TAX</th>
+              <th>INTEREST</th>
+              <th>BALANCEDUE</th>
+              <th>ITEMNO</th>
+              <th>QUANTITY</th>
+              <th>PAYMENTMETHOD</th>
+              <th>SHIPTOADDRESS</th>
+            </thead>
+            <tbody *ngFor="let paa of paaArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{paa.INVOICENO._text}}</td>
+                <td>{{paa.CUSTOMERNUMBER._text}}</td>
+                <td>{{paa.AGINGDATE._text}}</td>
+                <td>{{paa.GRANDTOTAL._text}}</td>
+                <td>{{paa.CURRENCYTYPE._text}}</td>
+                <td>{{paa.TAX._text}}</td>
+                <td>{{paa.INTEREST._text}}</td>
+                <td>{{paa.BALANCEDUE._text}}</td>
+                <td>{{paa.ITEMNO._text}}</td>
+                <td>{{paa.QUANTITY._text}}</td>
+                <td>{{paa.PAYMENTMETHOD._text}}</td>
+                <td>{{paa.SHIPTOADDRESS._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Credit Memo</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>CREDITNUMBER</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>BILLINGDATE</th>
+              <th>GRANDTOTAL</th>
+              <th>CURRENCY</th>
+              <th>SHIPTOADDRESS</th>
+              <th>QUANTITY</th>
+              <th>MATERIALNO</th>
+              <th>PRODUCTDESCRIPTION</th>
+              <th>INVOICENUMBER</th>
+            </thead>
+            <tbody *ngFor="let cm of cmArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{cm.CREDITNUMBER._text}}</td>
+                <td>{{cm.CUSTOMERNUMBER._text}}</td>
+                <td>{{cm.BILLINGDATE._text}}</td>
+                <td>{{cm.GRANDTOTAL._text}}</td>
+                <td>{{cm.CURRENCY._text}}</td>
+                <td>{{cm.SHIPTOADDRESS._text}}</td>
+                <td>{{cm.QUANTITY._text}}</td>
+                <td>{{cm.MATERIALNO._text}}</td>
+                <td>{{cm.PRODUCTDESCRIPTION._text}}</td>
+                <td>{{cm.INVOICENUMBER._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Overall Sales</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>SALEORDERNUMBER</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>SALEORDERDATE</th>
+              <th>DELIVERYDATE</th>
+              <th>SOLDTOADDRESS</th>
+              <th>PAYMENTTERMS</th>
+              <th>DELIVERYTERMS</th>
+              <th>MATERIALNO</th>
+              <th>PRODUCTDESCRIPTION</th>
+              <th>TOTALAMOUNT</th>
+            </thead>
+            <tbody *ngFor="let osd of osdArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{osd.SALEORDERNUMBER._text}}</td>
+                <td>{{osd.CUSTOMERNUMBER._text}}</td>
+                <td>{{osd.SALEORDERDATE._text}}</td>
+                <td>{{osd.DELIVERYDATE._text}}</td>
+                <td>{{osd.SOLDTOADDRESS._text}}</td>
+                <td>{{osd.PAYMENTTERMS._text}}</td>
+                <td>{{osd.DELIVERYTERMS._text}}</td>
+                <td>{{osd.MATERIALNO._text}}</td>
+                <td>{{osd.PRODUCTDESCRIPTION._text}}</td>
+                <td>{{osd.TOTALAMOUNT._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       
     </div>

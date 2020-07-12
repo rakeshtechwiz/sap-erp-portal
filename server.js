@@ -1523,65 +1523,113 @@ app.post('/main/work',(req,res) => {
 	req1.end();
 	
 });
-//Test wsdl
-var options = {
-	'method': 'POST',
-	'port': 50000,
-	'host': 'dxktpipo.kaarcloud.com',
-	'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_IM&interfaceNamespace=http://rakeshsaperp.com',
-	'headers': {
-		'Content-Type': 'application/xml',
-		'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
-	},
-	'maxRedirects': 20
-};
+//Customer Portal
+//Customer Profile CU
+app.post('/cus/procu',(req,res) => {
+	const CustomerNumber = req.body.CustomerNumber;
+	const Name = req.body.Name;
+	const CountryKey = req.body.CountryKey;
+	const City = req.body.City;
+	const PostalCode = req.body.PostalCode;
+	const AccountNo = req.body.AccountNo;
+	const ContactNo = req.body.ContactNo;
+	const MailID = req.body.MailID;
+	
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Cus_ProCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Cus_ProCU_Req>
+		  <CustomerNumber>${CustomerNumber}</CustomerNumber>
+		  <Name>${Name}</Name>
+		  <CountryKey>${CountryKey}</CountryKey>
+		  <City>${City}</City>
+		  <PostalCode>${PostalCode}</PostalCode>
+		  <AccountNo>${AccountNo}</AccountNo>
+		  <ContactNo>${ContactNo}</ContactNo>
+		  <MailID>${MailID}</MailID>
+	   </rak:MT_SRK_Cus_ProCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
 
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
 
-app.post('/login', (req, res) => {
-	// const vendorID = req.body.vendId;
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Cus_ProCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+
+req1.write(postData);
+
+req1.end();
+	
+});
+//Customer Profile
+app.post('/cus/pro',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_PRO&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
 	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
 	<soapenv:Header/>
 	<soapenv:Body>
-	   <urn:ZBAPI_SRK_IM>
+	   <urn:ZBAPI_SRK_CUS_PRO>
 		  <!--You may enter the following 2 items in any order-->
-		  <!--Optional:-->
-		  <OBJNR>?</OBJNR>
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
 		  <ITAB>
 			 <!--Zero or more repetitions:-->
 			 <item>
 				<!--Optional:-->
-				<OBJNR>?</OBJNR>
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
 				<!--Optional:-->
-				<TITLE>?</TITLE>
+				<NAME>?</NAME>
 				<!--Optional:-->
-				<USER_ID_CR>?</USER_ID_CR>
-				<!--Optional:-->
-				<ORG_ID>?</ORG_ID>
-				<!--Optional:-->
-				<PLANT_ID>?</PLANT_ID>
-				<!--Optional:-->
-				<LOC_ROOT_KEY_REF>?</LOC_ROOT_KEY_REF>
-				<!--Optional:-->
-				<START_TIMESTAMP>?</START_TIMESTAMP>
-				<!--Optional:-->
-				<END_TIMESTAMP>?</END_TIMESTAMP>
-				<!--Optional:-->
-				<REP_TIMESTAMP>?</REP_TIMESTAMP>
-				<!--Optional:-->
-				<LOSS_OF_PROD_TS>?</LOSS_OF_PROD_TS>
-				<!--Optional:-->
-				<STREET_HOUSE_NUM>?</STREET_HOUSE_NUM>
-				<!--Optional:-->
-				<POSTAL_CODE>?</POSTAL_CODE>
+				<COUNTRYKEY>?</COUNTRYKEY>
 				<!--Optional:-->
 				<CITY>?</CITY>
 				<!--Optional:-->
-				<COUNTRY>?</COUNTRY>
+				<POSTALCODE>?</POSTALCODE>
 				<!--Optional:-->
-				<REGION>?</REGION>
+				<ACCOUNTNO>?</ACCOUNTNO>
+				<!--Optional:-->
+				<CONTACTNO>?</CONTACTNO>
+				<!--Optional:-->
+				<MAILID>?</MAILID>
 			 </item>
 		  </ITAB>
-	   </urn:ZBAPI_SRK_IM>
+	   </urn:ZBAPI_SRK_CUS_PRO>
 	</soapenv:Body>
  </soapenv:Envelope>`;
 	const req1 = http.request(options, function (res1) {
@@ -1595,8 +1643,11 @@ app.post('/login', (req, res) => {
 			const body = Buffer.concat(chunks);
 			const xml = body.toString();
 			const data = parser.xml2json(xml, {compact: true, spaces: 4});
-			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_IM.Response']['ITAB']['item'];
-			console.log(resp);
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_PRO.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
 			res.send(resp);
 		});
 
@@ -1608,7 +1659,1236 @@ app.post('/login', (req, res) => {
 	req1.write(postData);
 
 	req1.end();
+	
 });
+//Customer Sale Order Data
+app.post('/cus/sod',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_SOD&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_SOD>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<SALEORDERNUMBER>?</SALEORDERNUMBER>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<SOLDTOPARTY>?</SOLDTOPARTY>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<NETVALUE>?</NETVALUE>
+				<!--Optional:-->
+				<VOLUME>?</VOLUME>
+				<!--Optional:-->
+				<DELIVERYPLANT>?</DELIVERYPLANT>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<INVOICENO>?</INVOICENO>
+				<!--Optional:-->
+				<REQUIREDDELIVERYDATE>?</REQUIREDDELIVERYDATE>
+				<!--Optional:-->
+				<PAYMENTTERMS>?</PAYMENTTERMS>
+				<!--Optional:-->
+				<ITEM>?</ITEM>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_SOD>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_SOD.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer Credit Memo
+app.post('/cus/cm',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_CM&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_CM>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<CREDITNUMBER>?</CREDITNUMBER>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<BILLINGDATE>?</BILLINGDATE>
+				<!--Optional:-->
+				<GRANDTOTAL>?</GRANDTOTAL>
+				<!--Optional:-->
+				<CURRENCY>?</CURRENCY>
+				<!--Optional:-->
+				<SHIPTOADDRESS>?</SHIPTOADDRESS>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<PRODUCTDESCRIPTION>?</PRODUCTDESCRIPTION>
+				<!--Optional:-->
+				<INVOICENUMBER>?</INVOICENUMBER>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_CM>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_CM.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer Inquiry
+app.post('/cus/inq',(req,res) => {
+	let INQUIRYNUMBER = req.body.INQUIRYNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_INQ&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_INQ>
+		  <!--You may enter the following 2 items in any order-->
+		  <INQUIRYNUMBER>${INQUIRYNUMBER}</INQUIRYNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<INQUIRYNUMBER>?</INQUIRYNUMBER>
+				<!--Optional:-->
+				<SOLDTOPARTY>?</SOLDTOPARTY>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<PODATE>?</PODATE>
+				<!--Optional:-->
+				<VALIDFROM>?</VALIDFROM>
+				<!--Optional:-->
+				<VALIDTILL>?</VALIDTILL>
+				<!--Optional:-->
+				<ITEMNO>?</ITEMNO>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<EXPECTEDORDERVALIDITY>?</EXPECTEDORDERVALIDITY>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_INQ>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_INQ.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer Invoice
+app.post('/cus/inv',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_INV&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_INV>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<INVOICENUMBER>?</INVOICENUMBER>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<TOTALAMOUNT>?</TOTALAMOUNT>
+				<!--Optional:-->
+				<TAX>?</TAX>
+				<!--Optional:-->
+				<INVOICEDATE>?</INVOICEDATE>
+				<!--Optional:-->
+				<DELIVERYORDERNO>?</DELIVERYORDERNO>
+				<!--Optional:-->
+				<SALESORDERNO>?</SALESORDERNO>
+				<!--Optional:-->
+				<COMPANYNAME>?</COMPANYNAME>
+				<!--Optional:-->
+				<ITEM>?</ITEM>
+				<!--Optional:-->
+				<UNITPRICE>?</UNITPRICE>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<SHIPTOADDRESS>?</SHIPTOADDRESS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_INV>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_INV.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer List Of Delivery
+app.post('/cus/lod',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_LOD&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_LOD>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<DELIVERYNUMBER>?</DELIVERYNUMBER>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<DELIVERYTYPE>?</DELIVERYTYPE>
+				<!--Optional:-->
+				<DELIVERYBLOCK>?</DELIVERYBLOCK>
+				<!--Optional:-->
+				<IMMEDIATEDELIVERY>?</IMMEDIATEDELIVERY>
+				<!--Optional:-->
+				<SHIPPINGCONDITIONS>?</SHIPPINGCONDITIONS>
+				<!--Optional:-->
+				<SHIPCOST>?</SHIPCOST>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_LOD>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_LOD.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer Overall Sales 
+app.post('/cus/osd',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_OSD&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_OSD>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<SALEORDERNUMBER>?</SALEORDERNUMBER>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<SALEORDERDATE>?</SALEORDERDATE>
+				<!--Optional:-->
+				<DELIVERYDATE>?</DELIVERYDATE>
+				<!--Optional:-->
+				<SOLDTOADDRESS>?</SOLDTOADDRESS>
+				<!--Optional:-->
+				<PAYMENTTERMS>?</PAYMENTTERMS>
+				<!--Optional:-->
+				<DELIVERYTERMS>?</DELIVERYTERMS>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<PRODUCTDESCRIPTION>?</PRODUCTDESCRIPTION>
+				<!--Optional:-->
+				<TOTALAMOUNT>?</TOTALAMOUNT>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_OSD>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_OSD.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Customer Payment
+app.post('/cus/pay',(req,res) => {
+	let CUSTOMERNUMBER = req.body.CUSTOMERNUMBER;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_CUS_PAA&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_CUS_PAA>
+		  <!--You may enter the following 2 items in any order-->
+		  <CUSTOMERNUMBER>${CUSTOMERNUMBER}</CUSTOMERNUMBER>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<INVOICENO>?</INVOICENO>
+				<!--Optional:-->
+				<CUSTOMERNUMBER>?</CUSTOMERNUMBER>
+				<!--Optional:-->
+				<AGINGDATE>?</AGINGDATE>
+				<!--Optional:-->
+				<GRANDTOTAL>?</GRANDTOTAL>
+				<!--Optional:-->
+				<CURRENCYTYPE>?</CURRENCYTYPE>
+				<!--Optional:-->
+				<TAX>?</TAX>
+				<!--Optional:-->
+				<INTEREST>?</INTEREST>
+				<!--Optional:-->
+				<BALANCEDUE>?</BALANCEDUE>
+				<!--Optional:-->
+				<ITEMNO>?</ITEMNO>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<PAYMENTMETHOD>?</PAYMENTMETHOD>
+				<!--Optional:-->
+				<SHIPTOADDRESS>?</SHIPTOADDRESS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_CUS_PAA>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_CUS_PAA.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Portal
+//Vendor Profile CU
+app.post('/ven/procu',(req,res) => {
+	const VendorNo = req.body.VendorNo;
+	const Name = req.body.Name;
+	const CountryKey = req.body.CountryKey;
+	const City = req.body.City;
+	const PostalCode = req.body.PostalCode;
+	const AccountNo = req.body.AccountNo;
+	const ContactNo = req.body.ContactNo;
+	const MailID = req.body.MailID;
+	
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_SYNC_Ven_ProCU_Req&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rak="http://rakeshsaperp.com">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <rak:MT_SRK_Ven_ProCU_Req>
+	      <VendorNo>${VendorNo}</VendorNo>
+		  <Name>${Name}</Name>
+		  <CountryKey>${CountryKey}</CountryKey>
+		  <City>${City}</City>
+		  <PostalCode>${PostalCode}</PostalCode>
+		  <AccountNo>${AccountNo}</AccountNo>
+		  <ContactNo>${ContactNo}</ContactNo>
+		  <MailID>${MailID}</MailID>
+		</rak:MT_SRK_Ven_ProCU_Req>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+ const req1 = http.request(options, function (res1) {
+	const chunks = [];
+
+	res1.on("data", function (chunk) {
+		chunks.push(chunk);
+	});
+
+	res1.on("end", function (chunk) {
+		const body = Buffer.concat(chunks);
+		const xml = body.toString();
+		const data = parser.xml2json(xml, {compact: true, spaces: 4});
+		const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:MT_SRK_Ven_ProCU_Resp'];
+		res.send({
+			status: resp['Status']['_text'],
+		});
+	});
+
+	res1.on("error", function (error) {
+		console.error(error);
+	});
+});
+req1.write(postData);
+
+req1.end();
+	
+});
+// //Vendor Profile
+// app.post('/ven/proo',(req,res) => {
+// 	console.log("Hey");
+// 	let VENDORNO = req.body.VENDORNO;
+// 	var options = {
+// 		'method': 'POST',
+// 		'port': 50000,
+// 		'host': 'dxktpipo.kaarcloud.com',
+// 		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_Pro&interfaceNamespace=http://rakeshsaperp.com',
+// 		'headers': {
+// 			'Content-Type': 'application/xml',
+// 			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+// 		},
+// 		'maxRedirects': 20
+// 	};
+// 	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+// 	<soapenv:Header/>
+// 	<soapenv:Body>
+// 	   <urn:ZBAPI_SRK_VEN_PRO>
+// 		  <!--You may enter the following 2 items in any order-->
+// 		  <VENDORNO>${VENDORNO}</VENDORNO>
+// 		  <ITAB>
+// 			 <!--Zero or more repetitions:-->
+// 			 <item>
+// 				<!--Optional:-->
+// 				<VENDORNO></VENDORNO>
+// 				<!--Optional:-->
+// 				<NAME>?</NAME>
+// 				<!--Optional:-->
+// 				<COUNTRYKEY>?</COUNTRYKEY>
+// 				<!--Optional:-->
+// 				<CITY>?</CITY>
+// 				<!--Optional:-->
+// 				<POSTALCODE>?</POSTALCODE>
+// 				<!--Optional:-->
+// 				<ACCOUNTNO>?</ACCOUNTNO>
+// 				<!--Optional:-->
+// 				<CONTACTNO>?</CONTACTNO>
+// 				<!--Optional:-->
+// 				<MAILID>?</MAILID>
+// 			 </item>
+// 		  </ITAB>
+// 	   </urn:ZBAPI_SRK_VEN_PRO>
+// 	</soapenv:Body>
+//  </soapenv:Envelope>`;
+// 	const req1 = http.request(options, function (res1) {
+// 		const chunks = [];
+
+// 		res1.on("data", function (chunk) {
+// 			chunks.push(chunk);
+// 		});
+
+// 		res1.on("end", function (chunk) {
+// 			const body = Buffer.concat(chunks);
+// 			const xml = body.toString();
+// 			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+// 			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_PRO.Response']['ITAB']['item'];
+// 			if(resp == null)
+// 			{
+// 				res.send({"null" : "null"});
+// 			}
+// 			res.send(resp);
+// 		});
+
+// 		res1.on("error", function (error) {
+// 			console.error(error);
+// 		});
+// 	});
+
+// 	req1.write(postData);
+
+// 	req1.end();
+	
+// });
+
+
+//Vendorr Profileee
+app.post('/ven/profile',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_Pro&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_PRO>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<VENDORNO></VENDORNO>
+				<!--Optional:-->
+				<NAME>?</NAME>
+				<!--Optional:-->
+				<COUNTRYKEY>?</COUNTRYKEY>
+				<!--Optional:-->
+				<CITY>?</CITY>
+				<!--Optional:-->
+				<POSTALCODE>?</POSTALCODE>
+				<!--Optional:-->
+				<ACCOUNTNO>?</ACCOUNTNO>
+				<!--Optional:-->
+				<CONTACTNO>?</CONTACTNO>
+				<!--Optional:-->
+				<MAILID>?</MAILID>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_PRO>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_PRO.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Credit
+app.post('/ven/cr',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_CR&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_CD>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<CREDITNUMBER>?</CREDITNUMBER>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<ZDATE>?</ZDATE>
+				<!--Optional:-->
+				<INVOICENO>?</INVOICENO>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<ITEMNUMBER>?</ITEMNUMBER>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<GRANDTOTAL>?</GRANDTOTAL>
+				<!--Optional:-->
+				<CREDITAMOUNT>?</CREDITAMOUNT>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_CD>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_CD.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Goods Receipt
+app.post('/ven/gr',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_GR&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_GR>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<GOODSRECEIPTNO>?</GOODSRECEIPTNO>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<ZDATE>?</ZDATE>
+				<!--Optional:-->
+				<BILLTOPARTY>?</BILLTOPARTY>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<PLANTID>?</PLANTID>
+				<!--Optional:-->
+				<GOODSRECIPIENT>?</GOODSRECIPIENT>
+				<!--Optional:-->
+				<NETPRICE>?</NETPRICE>
+				<!--Optional:-->
+				<PURCHASINGORGANIZATION>?</PURCHASINGORGANIZATION>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_GR>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_GR.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Invoice
+app.post('/ven/inv',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_Inv&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_INV>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<INVOICENO>?</INVOICENO>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<INVOICEDATE>?</INVOICEDATE>
+				<!--Optional:-->
+				<ITEM>?</ITEM>
+				<!--Optional:-->
+				<DESCRIPTION>?</DESCRIPTION>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<UNITPRICE>?</UNITPRICE>
+				<!--Optional:-->
+				<TAX>?</TAX>
+				<!--Optional:-->
+				<TOTALAMOUNT>?</TOTALAMOUNT>
+				<!--Optional:-->
+				<PAYMENTTERMS>?</PAYMENTTERMS>
+				<!--Optional:-->
+				<DELIVERYTERMS>?</DELIVERYTERMS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_INV>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_INV.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Payment
+app.post('/ven/pay',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_Pay&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_PAYO>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<INVOICENO>?</INVOICENO>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<INVOICEDATE>?</INVOICEDATE>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<DUEDATE>?</DUEDATE>
+				<!--Optional:-->
+				<BALANCEAMOUNT>?</BALANCEAMOUNT>
+				<!--Optional:-->
+				<PAIDAMOUNT>?</PAIDAMOUNT>
+				<!--Optional:-->
+				<OVERDUEDAYS>?</OVERDUEDAYS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_PAYO>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_PAYO.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Purchase
+app.post('/ven/po',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_PFinal&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_PO>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<PONUMBER>?</PONUMBER>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<ADDRESS>?</ADDRESS>
+				<!--Optional:-->
+				<PHONE>?</PHONE>
+				<!--Optional:-->
+				<PURCHASINGORGANIZATION>?</PURCHASINGORGANIZATION>
+				<!--Optional:-->
+				<COMPANYCODE>?</COMPANYCODE>
+				<!--Optional:-->
+				<QUOTATIONNO>?</QUOTATIONNO>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<DELIVERYDATE>?</DELIVERYDATE>
+				<!--Optional:-->
+				<NETPRICE>?</NETPRICE>
+				<!--Optional:-->
+				<POTYPE>?</POTYPE>
+				<!--Optional:-->
+				<STATUS>?</STATUS>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_PO>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_PO.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+//Vendor Quotation
+app.post('/ven/qd',(req,res) => {
+	let VENDORNO = req.body.VENDORNO;
+	var options = {
+		'method': 'POST',
+		'port': 50000,
+		'host': 'dxktpipo.kaarcloud.com',
+		'path': 'http://dxktpipo.kaarcloud.com:50000/XISOAPAdapter/MessageServlet?senderParty=&senderService=BC_SampleData&receiverParty=&receiverService=&interface=SI_SRK_OUT_Ven_QD&interfaceNamespace=http://rakeshsaperp.com',
+		'headers': {
+			'Content-Type': 'application/xml',
+			'Authorization': 'Basic UE9VU0VSOmthYXIyMDIw',
+		},
+		'maxRedirects': 20
+	};
+	const postData =  `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:sap-com:document:sap:rfc:functions">
+	<soapenv:Header/>
+	<soapenv:Body>
+	   <urn:ZBAPI_SRK_VEN_QD>
+		  <!--You may enter the following 2 items in any order-->
+		  <VENDORNO>${VENDORNO}</VENDORNO>
+		  <ITAB>
+			 <!--Zero or more repetitions:-->
+			 <item>
+				<!--Optional:-->
+				<QUOTATIONNO>?</QUOTATIONNO>
+				<!--Optional:-->
+				<VENDORNO>?</VENDORNO>
+				<!--Optional:-->
+				<SALESORGANIZATION>?</SALESORGANIZATION>
+				<!--Optional:-->
+				<QUOTATIONTYPE>?</QUOTATIONTYPE>
+				<!--Optional:-->
+				<INQUIRYNO>?</INQUIRYNO>
+				<!--Optional:-->
+				<SOLDTOPARTY>?</SOLDTOPARTY>
+				<!--Optional:-->
+				<SHIPTOPARTY>?</SHIPTOPARTY>
+				<!--Optional:-->
+				<MATERIALNO>?</MATERIALNO>
+				<!--Optional:-->
+				<QUANTITY>?</QUANTITY>
+				<!--Optional:-->
+				<TOTALPRICE>?</TOTALPRICE>
+				<!--Optional:-->
+				<DESCRIPTION>?</DESCRIPTION>
+			 </item>
+		  </ITAB>
+	   </urn:ZBAPI_SRK_VEN_QD>
+	</soapenv:Body>
+ </soapenv:Envelope>`;
+	const req1 = http.request(options, function (res1) {
+		const chunks = [];
+
+		res1.on("data", function (chunk) {
+			chunks.push(chunk);
+		});
+
+		res1.on("end", function (chunk) {
+			const body = Buffer.concat(chunks);
+			const xml = body.toString();
+			const data = parser.xml2json(xml, {compact: true, spaces: 4});
+			const resp = JSON.parse(data)['SOAP:Envelope']['SOAP:Body']['ns0:ZBAPI_SRK_VEN_QD.Response']['ITAB']['item'];
+			if(resp == null)
+			{
+				res.send({"null" : "null"});
+			}
+			res.send(resp);
+		});
+
+		res1.on("error", function (error) {
+			console.error(error);
+		});
+	});
+
+	req1.write(postData);
+
+	req1.end();
+	
+});
+
+
 
 
 

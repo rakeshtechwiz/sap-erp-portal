@@ -13,7 +13,14 @@
 </head>
 
 <body>
-
+  <ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
   <div [class.toggled]="show" class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -58,7 +65,107 @@
         
     </nav>
       <div class="container-fluid">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque architecto dolore repudiandae libero doloribus. Asperiores laboriosam obcaecati doloremque maxime. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis blanditiis officia reprehenderit ut, esse suscipit nostrum mollitia rem commodi asperiores eligendi unde! Architecto, molestias atque. Minus incidunt similique necessitatibus expedita delectus ab earum aut et consequatur quibusdam. Culpa placeat aut voluptate, pariatur quaerat deserunt quia quibusdam possimus quo laborum atque voluptatibus nulla neque consectetur similique esse soluta dolore repudiandae molestias, delectus quos laboriosam repellat iure. Explicabo quia maiores adipisci reiciendis a earum, modi beatae fugiat magni harum temporibus aliquid facilis nam illum qui esse est quibusdam commodi. Optio, tempora maxime! Aliquam nihil laborum, inventore molestiae excepturi expedita facere quo eius. Qui iste ut fugiat aspernatur porro nesciunt nobis temporibus consequuntur? Consequatur, autem modi. Iusto, aspernatur consectetur praesentium maiores at asperiores cupiditate, ut a reiciendis tempore fugit nemo totam reprehenderit omnis, voluptatem qui eveniet nesciunt veritatis mollitia ipsam molestias perspiciatis? Officia neque deserunt porro, atque quo facilis voluptate ab eligendi est at repellat, veniam tenetur reprehenderit eveniet ut fugiat, eum quisquam praesentium fugit inventore ea quaerat placeat. Vero tempore commodi deleniti labore ducimus temporibus itaque, officia non numquam accusamus cum fuga laborum placeat maxime? Id repellendus, dolorum, placeat quia ratione exercitationem harum nam recusandae iste incidunt repellat quis quos iure beatae.
+        <h4 class="mt-3 text-center"><strong>Inquiry Data</strong></h4>
+        <form style="margin-left: 10vw;">
+          <div class="form-label-group d-flex align-center mb-3 mt-3">
+            <input type="text" id="INQUIRYNUMBER" style="width:50vw;" placeholder="InquiryNumber" class="form-control">
+            <button (click)="viewINQ()" class="btn btn-primary ml-3">View</button>
+          </div>  
+        </form>
+        <div *ngIf="inqshow" class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>INQUIRYNUMBER</th>
+              <th>SOLDTOPARTY</th>
+              <th>PONUMBER</th>
+              <th>PODATE</th>
+              <th>VALIDFROM</th>
+              <th>VALIDTILL</th>
+              <th>ITEMNO</th>
+              <th>QUANTITY</th>
+              <th>EXPECTEDORDERVALIDITY</th>
+            </thead>
+            <tbody *ngFor="let inq of inqArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{inq.INQUIRYNUMBER._text}}</td>
+                <td>{{inq.SOLDTOPARTY._text}}</td>
+                <td>{{inq.PONUMBER._text}}</td>
+                <td>{{inq.PODATE._text}}</td>
+                <td>{{inq.VALIDFROM._text}}</td>
+                <td>{{inq.VALIDTILL._text}}</td>
+                <td>{{inq.ITEMNO._text}}</td>
+                <td>{{inq.QUANTITY._text}}</td>
+                <td>{{inq.EXPECTEDORDERVALIDITY._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4 class="mt-3 text-center"><strong>Sale Order</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>SALEORDERNUMBER</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>SOLDTOPARTY</th>
+              <th>PONUMBER</th>
+              <th>NETVALUE</th>
+              <th>VOLUME</th>
+              <th>DELIVERYPLANT</th>
+              <th>QUANTITY</th>
+              <th>INVOICENO</th>
+              <th>REQUIREDDELIVERYDATE</th>
+              <th>PAYMENTTERMS</th>
+              <th>ITEM</th>
+            </thead>
+            <tbody *ngFor="let sod of sodArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{sod.SALEORDERNUMBER._text}}</td>
+                <td>{{sod.CUSTOMERNUMBER._text}}</td>
+                <td>{{sod.SOLDTOPARTY._text}}</td>
+                <td>{{sod.PONUMBER._text}}</td>
+                <td>{{sod.NETVALUE._text}}</td>
+                <td>{{sod.VOLUME._text}}</td>
+                <td>{{sod.DELIVERYPLANT._text}}</td>
+                <td>{{sod.QUANTITY._text}}</td>
+                <td>{{sod.INVOICENO._text}}</td>
+                <td>{{sod.REQUIREDDELIVERYDATE._text}}</td>
+                <td>{{sod.PAYMENTTERMS._text}}</td>
+                <td>{{sod.ITEM._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h4  class="mt-3 text-center"><strong>List of Delivery</strong></h4>
+        <div  class="table-responsive">     
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th> </th>
+              <th>DELIVERYNUMBER</th>
+              <th>CUSTOMERNUMBER</th>
+              <th>DELIVERYTYPE</th>
+              <th>DELIVERYBLOCK</th>
+              <th>IMMEDIATEDELIVERY</th>
+              <th>SHIPPINGCONDITIONS</th>
+              <th>SHIPCOST</th>
+            </thead>
+            <tbody *ngFor="let lod of lodArray">
+              <tr align="center">
+                <td> </td>
+                <td>{{lod.DELIVERYNUMBER._text}}</td>
+                <td>{{lod.CUSTOMERNUMBER._text}}</td>
+                <td>{{lod.DELIVERYTYPE._text}}</td>
+                <td>{{lod.DELIVERYBLOCK._text}}</td>
+                <td>{{lod.IMMEDIATEDELIVERY._text}}</td>
+                <td>{{lod.SHIPPINGCONDITIONS._text}}</td>
+                <td>{{lod.SHIPCOST._text}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       
     </div>

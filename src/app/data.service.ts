@@ -102,6 +102,76 @@ export class DataService {
   getMainWork(options){
     return fetch("http://localhost:8000/main/work",options);
   }
+  //Customer Portal
+  //Profile CU
+  getCusProCU(options){
+    return fetch("http://localhost:8000/cus/procu",options);
+  }
+  //Profile
+  getCusPro(options){
+    return fetch("http://localhost:8000/cus/pro",options);
+  }
+  //Sale Order Data
+  getCusSOD(options){
+    return fetch("http://localhost:8000/cus/sod",options);
+  }
+  //Credit Memo
+  getCusCM(options){
+    return fetch("http://localhost:8000/cus/cm",options);
+  }
+  //Inquiry
+  getCusINQ(options){
+    return fetch("http://localhost:8000/cus/inq",options);
+  }
+  //Invoice
+  getCusINV(options){
+    return fetch("http://localhost:8000/cus/inv",options);
+  }
+  //List Of Delivery
+  getCusLOD(options){
+    return fetch("http://localhost:8000/cus/lod",options);
+  }
+  //Overall Sales
+  getCusOSD(options){
+    return fetch("http://localhost:8000/cus/osd",options);
+  }
+  //Payment
+  getCusPAA(options){
+    return fetch("http://localhost:8000/cus/pay",options);
+  }
+  //Vendor Portal
+  //Profile CU
+  getVenProCU(options){
+    return fetch("http://localhost:8000/ven/procu",options);
+  }
+  //Profile 
+  getVenPro(options){
+    return fetch("http://localhost:8000/ven/profile",options);
+  }
+  //Credit
+  getVenCredit(options){
+    return fetch("http://localhost:8000/ven/cr",options);
+  }
+  //Goods
+  getVenGoods(options){
+    return fetch("http://localhost:8000/ven/gr",options);
+  }
+  //Invoice
+  getVenInvoice(options){
+    return fetch("http://localhost:8000/ven/inv",options);
+  }
+  //Payment
+  getVenPayment(options){
+    return fetch("http://localhost:8000/ven/pay",options);
+  }
+  //Purchase
+  getVenPurchase(options){
+    return fetch("http://localhost:8000/ven/po",options);
+  }
+  //Quotation
+  getVenQuotation(options){
+    return fetch("http://localhost:8000/ven/qd",options);
+  }
   //Auth functions
   customerAuth(token){ 
       const myHeaders = new Headers();
